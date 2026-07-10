@@ -9,6 +9,7 @@ import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const [pageReady, setPageReady] = useState(false);
@@ -17,6 +18,7 @@ export default function Home() {
     <>
       <Preloader onComplete={() => setPageReady(true)} />
       <div className={`transition-opacity duration-1000 ${pageReady ? "opacity-100 animate-in fade-in" : "opacity-0"}`}>
+        <ThemeToggle />
         <Hero active={pageReady} />
         <About />
         <Skills />

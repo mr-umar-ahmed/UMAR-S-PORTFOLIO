@@ -64,7 +64,7 @@ export default function CustomCursor() {
       width: 32,
       height: 32,
       backgroundColor: "rgba(255, 255, 255, 0)",
-      border: "1px solid rgba(255, 255, 255, 0.15)",
+      border: "1px solid var(--color-border)",
     },
     hover: {
       width: 64,
@@ -76,16 +76,17 @@ export default function CustomCursor() {
     view: {
       width: 80,
       height: 80,
-      backgroundColor: "rgba(198, 255, 58, 0.95)", // Acid Green
-      border: "1px solid rgba(198, 255, 58, 0.95)",
-      color: "#080809",
+      backgroundColor: "var(--color-accent)",
+      border: "1px solid var(--color-accent)",
+      color: "var(--color-bg)",
     },
     drag: {
       width: 80,
       height: 80,
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-      border: "1px solid rgba(255, 255, 255, 0.3)",
+      backgroundColor: "rgba(128, 128, 128, 0.1)",
+      border: "1px solid var(--color-border)",
       backdropFilter: "blur(4px)",
+      color: "var(--color-text)",
     }
   };
 
@@ -93,7 +94,7 @@ export default function CustomCursor() {
     <>
       {/* Inner Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 animate-pulse"
         style={{
           x: mouseX,
           y: mouseY,
@@ -113,12 +114,12 @@ export default function CustomCursor() {
         transition={{ type: "spring", damping: 30, stiffness: 250, mass: 0.5 }}
       >
         {cursorType === "view" && (
-          <span className="text-black font-bold text-[10px] font-display">
+          <span className="font-bold text-[10px] font-display">
             {cursorText || "VIEW"}
           </span>
         )}
         {cursorType === "drag" && (
-          <span className="text-white font-bold text-[10px] font-display">
+          <span className="font-bold text-[10px] font-display">
             {cursorText || "DRAG"}
           </span>
         )}

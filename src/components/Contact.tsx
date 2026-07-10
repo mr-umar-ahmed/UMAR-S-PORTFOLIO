@@ -74,9 +74,9 @@ export default function Contact() {
     <section
       id="contact"
       ref={containerRef}
-      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-[#080809] border-t border-white/5"
+      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-background dark:bg-background-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500"
     >
-      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-[#1e2024]/10 select-none pointer-events-none">
+      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
         06/
       </div>
 
@@ -84,10 +84,10 @@ export default function Contact() {
         
         {/* 3.8 Shipped Freelance Grid */}
         <div className="w-full flex flex-col">
-          <span className="text-xs tracking-[0.25em] text-accent font-display font-semibold uppercase block mb-6">
+          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-6">
             REAL-WORLD SOLVERS
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tighter text-white mb-12 select-text">
+          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tighter text-[#1A1A18] dark:text-[#F2F1ED] mb-12 select-text">
             SHIPPED SOLUTIONS
           </h2>
 
@@ -101,26 +101,26 @@ export default function Contact() {
                   key={card.id}
                   onMouseEnter={() => setHoveredCard(card.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  className={`border border-white/5 bg-surface/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between aspect-square group/item ${
+                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between aspect-square group/item ${
                     isDimmed ? "opacity-30 scale-[0.98]" : "opacity-100 scale-100"
-                  } ${isActive ? "border-accent/30 bg-surface/50" : ""}`}
+                  } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark" : ""}`}
                 >
                   <div className="flex justify-between items-start">
-                    <span className="text-[10px] font-mono tracking-widest text-muted uppercase">
+                    <span className="text-[10px] font-mono tracking-widest text-muted dark:text-muted-dark uppercase">
                       {card.role}
                     </span>
                     <ArrowRight
-                      className={`w-4 h-4 text-accent transition-transform duration-300 ${
+                      className={`w-4 h-4 text-accent dark:text-accent-dark transition-transform duration-300 ${
                         isActive ? "translate-x-1 -rotate-45" : "rotate-0"
                       }`}
                     />
                   </div>
 
                   <div className="mt-auto space-y-2">
-                    <h3 className="text-xl font-bold font-display tracking-tight text-white">
+                    <h3 className="text-xl font-bold font-display tracking-tight text-[#1A1A18] dark:text-[#F2F1ED]">
                       {card.name}
                     </h3>
-                    <p className="text-xs text-muted leading-relaxed font-body">
+                    <p className="text-xs text-muted dark:text-muted-dark leading-relaxed font-body">
                       {card.desc}
                     </p>
                   </div>
@@ -131,8 +131,8 @@ export default function Contact() {
         </div>
 
         {/* 3.8 Certifications minimalist ticker */}
-        <div className="w-full border-y border-white/5 py-6 overflow-hidden select-none relative">
-          <div className="flex whitespace-nowrap animate-infinite-scroll-left gap-12 text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted/40">
+        <div className="w-full border-y border-black/5 dark:border-white/5 py-6 overflow-hidden select-none relative">
+          <div className="flex whitespace-nowrap animate-infinite-scroll-left gap-12 text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted/40 dark:text-muted-dark/40">
             {[...certs, ...certs, ...certs].map((cert, index) => (
               <span key={index} className="flex items-center gap-2">
                 <span>✦</span>
@@ -148,13 +148,13 @@ export default function Contact() {
           {/* Left Headline & Social Info */}
           <div className="lg:col-span-5 space-y-8 flex flex-col justify-between h-full">
             <div className="space-y-6">
-              <span className="text-xs tracking-[0.25em] text-accent font-display font-semibold uppercase block">
+              <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block">
                 GET IN TOUCH
               </span>
-              <h2 className="text-5xl md:text-6xl font-display font-extrabold tracking-tighter leading-[0.9] text-white select-text">
+              <h2 className="text-5xl md:text-6xl font-display font-extrabold tracking-tighter leading-[0.9] text-[#1A1A18] dark:text-[#F2F1ED] select-text">
                 LET&apos;S BUILD<br />SOMETHING BOLD.
               </h2>
-              <p className="text-sm text-muted font-body leading-relaxed max-w-sm">
+              <p className="text-sm text-muted dark:text-muted-dark leading-relaxed max-w-sm">
                 Have a proposal, an API engineering challenge, or just want to grab a coffee? Send a direct dispatch message here.
               </p>
             </div>
@@ -166,7 +166,7 @@ export default function Contact() {
                   href="https://linkedin.com/in/mr-umar-ahmed"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full border border-white/10 hover:border-accent hover:text-accent transition-colors flex items-center justify-center text-muted"
+                  className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center justify-center text-muted dark:text-muted-dark"
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
@@ -176,7 +176,7 @@ export default function Contact() {
                   href="https://github.com/mr-umar-ahmed"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full border border-white/10 hover:border-accent hover:text-accent transition-colors flex items-center justify-center text-muted"
+                  className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center justify-center text-muted dark:text-muted-dark"
                 >
                   <Github className="w-5 h-5" />
                 </a>
@@ -184,7 +184,7 @@ export default function Contact() {
               <div ref={social3}>
                 <a
                   href="mailto:mr.umar.ahmed@outlook.com"
-                  className="w-12 h-12 rounded-full border border-white/10 hover:border-accent hover:text-accent transition-colors flex items-center justify-center text-muted"
+                  className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center justify-center text-muted dark:text-muted-dark"
                 >
                   <Mail className="w-5 h-5" />
                 </a>
@@ -193,7 +193,7 @@ export default function Contact() {
           </div>
 
           {/* Right Form Card */}
-          <div className="lg:col-span-7 bg-surface/30 glassmorphism p-8 md:p-10 rounded-[2px]">
+          <div className="lg:col-span-7 bg-surface/50 dark:bg-surface-dark/30 glassmorphism p-8 md:p-10 rounded-[2px]">
             <form onSubmit={handleSubmit} className="space-y-8 select-text">
               {/* Web3Forms access key, defaults to empty. Fallback uses mailto */}
               <input type="hidden" name="access_key" value="" />
@@ -206,9 +206,9 @@ export default function Contact() {
                     name="name"
                     placeholder=" "
                     required
-                    className="peer w-full bg-transparent border-b border-white/10 py-3.5 text-sm text-white focus:outline-none focus:border-accent transition-colors font-body"
+                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors font-body"
                   />
-                  <label className="absolute left-0 top-3.5 text-muted/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent">
+                  <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     YOUR NAME
                   </label>
                 </div>
@@ -219,9 +219,9 @@ export default function Contact() {
                     name="email"
                     placeholder=" "
                     required
-                    className="peer w-full bg-transparent border-b border-white/10 py-3.5 text-sm text-white focus:outline-none focus:border-accent transition-colors font-body"
+                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors font-body"
                   />
-                  <label className="absolute left-0 top-3.5 text-muted/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent">
+                  <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     EMAIL ADDRESS
                   </label>
                 </div>
@@ -234,9 +234,9 @@ export default function Contact() {
                   rows={4}
                   placeholder=" "
                   required
-                  className="peer w-full bg-transparent border-b border-white/10 py-3.5 text-sm text-white focus:outline-none focus:border-accent transition-colors resize-none font-body"
+                  className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors resize-none font-body"
                 />
-                <label className="absolute left-0 top-3.5 text-muted/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent">
+                <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                   YOUR DISPATCH MESSAGE
                 </label>
               </div>
@@ -246,14 +246,14 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-accent hover:bg-white text-black font-display font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center gap-2 group cursor-none"
+                  className="w-full py-4 bg-accent dark:bg-accent-dark hover:bg-black dark:hover:bg-white text-white dark:text-black hover:text-white dark:hover:text-black font-display font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center gap-2 group cursor-none"
                 >
                   {isSubmitting ? "TRANSMITTING..." : "TRANSMIT DISPATCH"}
                   <Send className="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
 
                 {submitStatus === "success" && (
-                  <div className="flex items-center gap-2 text-accent text-xs font-mono select-none">
+                  <div className="flex items-center gap-2 text-accent dark:text-accent-dark text-xs font-mono select-none">
                     <CheckCircle className="w-4 h-4" />
                     <span>DISPATCH SENT. WILL CORRESPOND SHARPLY.</span>
                   </div>

@@ -5,8 +5,17 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #080809;
+  --color-bg: #F7F5F1;
+  --color-accent: #D8471F;
+  --color-text: #1A1A18;
+  --color-border: rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  --color-bg: #0D0C0F;
   --color-accent: #C6FF3A;
+  --color-text: #F2F1ED;
+  --color-border: rgba(255, 255, 255, 0.04);
 }
 
 /* Hide standard scrollbars and style customized scrollbar */
@@ -20,8 +29,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E2024;
+  background: #E4E1D9;
   border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1E2024;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -36,9 +49,34 @@
 
 body {
   background-color: var(--color-bg);
-  color: #FFFFFF;
+  color: var(--color-text);
   font-family: 'Switzer', sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Volumetric top glow background for Dark Mode */
+.volumetric-bg {
+  position: relative;
+}
+
+.volumetric-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 70vh;
+  background: radial-gradient(ellipse at top center, rgba(26, 22, 16, 0.18), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.dark .volumetric-bg::before {
+  opacity: 1;
 }
 
 /* Film Grain Noise Overlay */
@@ -49,10 +87,15 @@ body {
   width: 100vw; 
   height: 100vh;
   content: "";
-  opacity: 0.025;
+  opacity: 0.045; /* Light mode opacity */
   pointer-events: none;
   z-index: 9999;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  transition: opacity 0.4s ease;
+}
+
+.dark .noise-overlay {
+  opacity: 0.025; /* Dark mode opacity */
 }
 
 /* Custom styles for display texts */
@@ -79,16 +122,61 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom Glassmorphism Utility */
 .glassmorphism {
-  background: rgba(15, 16, 20, 0.4);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.dark .glassmorphism {
+  background: rgba(22, 21, 25, 0.4);
 }
 
 /* Custom Grid background lines */
 .grid-lines {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
 }
+
+.dark .grid-lines {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* SVG Mesh Gradient dynamic styles */
+.mesh-stop-1 {
+  stop-color: #D8471F; /* Burnt Orange light */
+  stop-opacity: 0.15;
+  transition: stop-color 0.4s ease, stop-opacity 0.4s ease;
+}
+
+.dark .mesh-stop-1 {
+  stop-color: #C6FF3A; /* Acid Green dark */
+  stop-opacity: 0.22;
+}
+
+.mesh-stop-2 {
+  stop-color: #F7F5F1;
+  stop-opacity: 0;
+  transition: stop-color 0.4s ease;
+}
+
+.dark .mesh-stop-2 {
+  stop-color: #0D0C0F;
+}
+
+.mesh-stop-3 {
+  stop-color: #FF6B35;
+  stop-opacity: 0.1;
+  transition: stop-color 0.4s ease, stop-opacity 0.4s ease;
+}
+
+.dark .mesh-stop-3 {
+  stop-color: #FF5C33;
+  stop-opacity: 0.12;
+}
+

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,11 +9,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#080809",
-        surface: "#0f1014",
-        accent: "#C6FF3A", // Acid Green
-        muted: "#8F939D",
-        inactive: "#1E2024",
+        background: {
+          DEFAULT: "#F7F5F1", // Light: Warm Limestone
+          dark: "#0D0C0F",    // Dark: Midnight Graphite
+        },
+        surface: {
+          DEFAULT: "#FFFFFF",
+          dark: "#161519",
+        },
+        accent: {
+          DEFAULT: "#D8471F", // Light: Burnt Orange
+          dark: "#C6FF3A",    // Dark: Acid Green
+        },
+        muted: {
+          DEFAULT: "#6B6A63",
+          dark: "#8F8E89",
+        },
       },
       fontFamily: {
         display: ["General Sans", "sans-serif"],

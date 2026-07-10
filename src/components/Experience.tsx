@@ -91,28 +91,28 @@ export default function Experience() {
     <section
       id="experience"
       ref={containerRef}
-      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-[#0b0c0e] border-t border-white/5"
+      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-surface dark:bg-surface-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500"
     >
-      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-[#1e2024]/10 select-none pointer-events-none">
+      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
         03/
       </div>
 
       <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
         <div className="w-full text-left mb-16 md:mb-24">
-          <span className="text-xs tracking-[0.25em] text-accent font-display font-semibold uppercase block mb-4">
+          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-4">
             JOURNEY
           </span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter text-white select-text">
+          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter text-[#1A1A18] dark:text-[#F2F1ED] select-text">
             PROFESSIONAL TIMELINE
           </h2>
         </div>
 
         <div className="relative w-full max-w-4xl min-h-[500px]">
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2 z-0" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-black/10 dark:bg-white/10 -translate-x-1/2 z-0" />
           
           <div
             ref={lineRef}
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-accent -translate-x-1/2 z-0 origin-top"
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-accent dark:bg-accent-dark -translate-x-1/2 z-0 origin-top"
             style={{ transform: "scaleY(0)" }}
           />
 
@@ -126,25 +126,28 @@ export default function Experience() {
                   className="timeline-item relative flex flex-col md:flex-row md:justify-between items-start md:items-center w-full z-10 pl-10 md:pl-0 select-text"
                 >
                   <div className="absolute left-4 md:left-1/2 top-1.5 md:top-1/2 -translate-y-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center">
-                    <div className="timeline-dot w-3.5 h-3.5 rounded-full bg-accent relative z-10 border border-background shadow-[0_0_12px_rgba(198,255,58,0.6)]" />
-                    <div className="absolute w-full h-full rounded-full bg-accent/20 animate-ping z-0" />
+                    <div
+                      className="timeline-dot w-3.5 h-3.5 rounded-full bg-accent dark:bg-accent-dark relative z-10 border border-background dark:border-background-dark"
+                      style={{ boxShadow: "0 0 12px var(--color-accent)" }}
+                    />
+                    <div className="absolute w-full h-full rounded-full bg-accent/20 dark:bg-accent-dark/20 animate-ping z-0" />
                   </div>
 
                   <div className={`hidden md:block w-[45%] ${isEven ? "order-last" : ""}`} />
 
                   <div
-                    className="timeline-card w-full md:w-[45%] bg-surface/30 glassmorphism p-6 md:p-8 rounded-[2px] hover:border-accent/20 transition-all duration-300 text-left"
+                    className="timeline-card w-full md:w-[45%] bg-background/50 dark:bg-background-dark/30 glassmorphism p-6 md:p-8 rounded-[2px] hover:border-accent/20 dark:hover:border-accent-dark/20 transition-all duration-300 text-left"
                   >
-                    <span className="text-[10px] md:text-xs font-semibold tracking-widest text-accent font-display uppercase block mb-2">
+                    <span className="text-[10px] md:text-xs font-semibold tracking-widest text-accent dark:text-accent-dark font-display uppercase block mb-2">
                       {item.duration}
                     </span>
-                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white font-display leading-tight mb-1">
+                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-[#1A1A18] dark:text-[#F2F1ED] font-display leading-tight mb-1">
                       {item.role}
                     </h3>
-                    <h4 className="text-sm md:text-base text-muted font-body font-medium mb-4">
+                    <h4 className="text-sm md:text-base text-muted dark:text-muted-dark font-body font-medium mb-4">
                       {item.company}
                     </h4>
-                    <p className="text-xs md:text-sm text-muted font-body leading-relaxed">
+                    <p className="text-xs md:text-sm text-muted dark:text-muted-dark font-body leading-relaxed">
                       {item.description}
                     </p>
                   </div>

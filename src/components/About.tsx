@@ -120,10 +120,10 @@ export default function About() {
     <section
       id="about"
       ref={containerRef}
-      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 flex flex-col justify-center border-t border-white/5 bg-[#0b0c0e]"
+      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 flex flex-col justify-center border-t border-black/5 dark:border-white/5 bg-surface dark:bg-surface-dark transition-colors duration-500"
     >
       {/* Subdued numbering indicator */}
-      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-[#1e2024]/10 select-none pointer-events-none">
+      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
         01/
       </div>
 
@@ -135,7 +135,7 @@ export default function About() {
             ref={imageWrapperRef}
             data-cursor="drag"
             data-cursor-text="ABOUT"
-            className="relative w-full aspect-[4/5] bg-surface overflow-hidden rounded-[2px]"
+            className="relative w-full aspect-[4/5] bg-[#EAE8E4] dark:bg-surface-dark overflow-hidden rounded-[2px]"
             style={{ clipPath: "inset(0% 100% 0% 0%)" }}
           >
             <Image
@@ -146,20 +146,20 @@ export default function About() {
               priority
               className="object-cover transition-transform duration-700 hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 dark:from-background-dark/40 to-transparent pointer-events-none" />
           </div>
 
           {/* Counters Grid */}
           <div ref={statsRef} className="grid grid-cols-3 gap-6 md:gap-8 select-text">
             {stats.map((stat, idx) => (
               <div key={idx} className="stat-block flex flex-col">
-                <span className="text-[10vw] lg:text-[4vw] font-display font-bold leading-none text-accent tracking-tighter tabular-nums">
+                <span className="text-[10vw] lg:text-[4vw] font-display font-bold leading-none text-accent dark:text-accent-dark tracking-tighter tabular-nums">
                   <span className="stat-value" data-target={stat.value}>
                     0
                   </span>
                   {stat.suffix}
                 </span>
-                <span className="text-xs md:text-[13px] text-muted font-body mt-2 leading-snug">
+                <span className="text-xs md:text-[13px] text-muted dark:text-muted-dark font-body mt-2 leading-snug">
                   {stat.label}
                 </span>
               </div>
@@ -169,19 +169,19 @@ export default function About() {
 
         {/* Right Column: Rich Text Philosophy Block */}
         <div ref={textRef} className="lg:col-span-7 flex flex-col justify-center">
-          <span className="text-xs tracking-[0.25em] text-accent font-display font-semibold uppercase mb-6">
+          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase mb-6">
             ABOUT & PHILOSOPHY
           </span>
-          <h2 className="text-[7.5vw] lg:text-[4.5vw] font-display font-bold tracking-tighter leading-[0.95] text-white mb-8 select-text">
+          <h2 className="text-[7.5vw] lg:text-[4.5vw] font-display font-bold tracking-tighter leading-[0.95] text-[#1A1A18] dark:text-[#F2F1ED] mb-8 select-text">
             BRIDGING DIGITAL LOGIC AND SEAMLESS EXPERIENCES.
           </h2>
 
-          <div className="space-y-6 text-sm md:text-base font-light text-muted leading-relaxed select-text font-body">
-            <p className="border-l-[3px] border-accent pl-6 py-1 text-white font-medium text-lg md:text-xl">
+          <div className="space-y-6 text-sm md:text-base font-light text-muted dark:text-muted-dark leading-relaxed select-text font-body">
+            <p className="border-l-[3px] border-accent dark:border-accent-dark pl-6 py-1 text-[#1A1A18] dark:text-[#F2F1ED] font-medium text-lg md:text-xl">
               &ldquo;I write code that bridges the gap between design systems and complex backends. My work focuses on performance, local-first architectures, and Web3 security.&rdquo;
             </p>
             <p>
-              As a Computer Science student at the National Institute of Technology (NIT), full-stack developer, and the founder of <span className="text-white font-medium">MedX Laboratory</span>, I build production-ready digital products. I combine solid engineering concepts with slick typography and fluid visual structures to create experiences that stand out.
+              As a Computer Science student at the National Institute of Technology (NIT), full-stack developer, and the founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">MedX Laboratory</span>, I build production-ready digital products. I combine solid engineering concepts with slick typography and fluid visual structures to create experiences that stand out.
             </p>
             <p>
               Whether structuring localized AI browsers, architecting decentralized secure networks for vehicles, or building role-based education paths, I prioritize rapid delivery, robust architecture, and high aesthetic standards.

@@ -53,7 +53,7 @@ function TiltCard({ title, subtitle, detail, icon: Icon }: CardProps) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full aspect-[4/3] bg-surface/30 glassmorphism p-8 flex flex-col justify-between rounded-[2px] transition-transform duration-200 ease-out select-text group"
+      className="relative w-full aspect-[4/3] bg-surface/30 glassmorphism p-8 flex flex-col justify-between rounded-[2px] transition-all duration-300 ease-out select-text group"
       style={{
         transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
         transformStyle: "preserve-3d",
@@ -63,27 +63,27 @@ function TiltCard({ title, subtitle, detail, icon: Icon }: CardProps) {
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-[2px]"
         style={{
-          background: `radial-gradient(circle 120px at ${shineX}% ${shineY}%, rgba(255, 255, 255, 0.08), transparent 70%)`,
+          background: `radial-gradient(circle 120px at ${shineX}% ${shineY}%, rgba(128, 128, 128, 0.08), transparent 70%)`,
         }}
       />
 
       <div style={{ transform: "translateZ(30px)" }} className="flex justify-between items-start">
-        <div className="w-9 h-9 rounded bg-white/5 border border-white/10 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-accent" />
+        <div className="w-9 h-9 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center">
+          <Icon className="w-4 h-4 text-accent dark:text-accent-dark" />
         </div>
-        <span className="text-[9px] font-mono tracking-widest text-muted/50 uppercase">
+        <span className="text-[9px] font-mono tracking-widest text-muted/50 dark:text-muted-dark/50 uppercase">
           HONOR
         </span>
       </div>
 
       <div style={{ transform: "translateZ(40px)" }} className="space-y-2 mt-auto">
-        <h4 className="text-[10px] font-semibold font-display tracking-widest text-accent uppercase">
+        <h4 className="text-[10px] font-semibold font-display tracking-widest text-accent dark:text-accent-dark uppercase">
           {subtitle}
         </h4>
-        <h3 className="text-xl md:text-[22px] font-bold font-display tracking-tight text-white leading-tight">
+        <h3 className="text-xl md:text-[22px] font-bold font-display tracking-tight text-[#1A1A18] dark:text-[#F2F1ED] leading-tight">
           {title}
         </h3>
-        <p className="text-xs md:text-sm text-muted font-body leading-relaxed pt-1.5">
+        <p className="text-xs md:text-sm text-muted dark:text-muted-dark leading-relaxed pt-1.5">
           {detail}
         </p>
       </div>
@@ -93,17 +93,17 @@ function TiltCard({ title, subtitle, detail, icon: Icon }: CardProps) {
 
 export default function Achievements() {
   return (
-    <section id="achievements" className="relative py-24 md:py-36 px-8 md:px-16 bg-background border-t border-white/5">
-      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-[#1e2024]/10 select-none pointer-events-none">
+    <section id="achievements" className="relative py-24 md:py-36 px-8 md:px-16 bg-background dark:bg-background-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500">
+      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
         05/
       </div>
 
       <div className="max-w-7xl mx-auto w-full">
         <div className="w-full text-left mb-16 md:mb-24 relative z-10">
-          <span className="text-xs tracking-[0.25em] text-accent font-display font-semibold uppercase block mb-4">
+          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-4">
             COMPETITIONS
           </span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter text-white select-text">
+          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter text-[#1A1A18] dark:text-[#F2F1ED] select-text">
             ACHIEVEMENTS & HACKATHONS
           </h2>
         </div>
