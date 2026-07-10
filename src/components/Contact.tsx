@@ -5,10 +5,38 @@ import { ArrowRight, Github, Linkedin, Mail, Send, CheckCircle, AlertCircle } fr
 import { useMagnetic } from "@/hooks/useMagnetic";
 
 const freelanceCards = [
-  { id: "infynlab", name: "Infynlab", role: "Full-Stack Development", desc: "Crafting modern web dashboards and secure cloud systems." },
-  { id: "crafiraa", name: "Crafiraa", role: "Frontend UI Architecture", desc: "Spearheaded premium UI interactions and page loaders." },
-  { id: "unveil", name: "Unveil Spark Tech", role: "AI Integrations", desc: "Engineered LLM API pipelines and search indices." },
-  { id: "nit", name: "NIT Grievance Portal", role: "Backend Systems", desc: "Refined SQL schemas and role-based auth structures." }
+  {
+    id: "medx",
+    name: "MedX Laboratory",
+    role: "Clinical Analytics",
+    desc: "Volumetric diagnostic platform mapping real-time waiting logs and patient triage routing.",
+    link: "https://medx-laboratory.netlify.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-medical-research-facility-and-microscope-40176-large.mp4"
+  },
+  {
+    id: "skilledge",
+    name: "SkillEdge OS",
+    role: "EdTech Dashboard",
+    desc: "Personalized educational milestone mapper with learning tracks and dashboard metrics.",
+    link: "https://skill-edge-os.vercel.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-programming-code-scrolls-on-a-dark-screen-34351-large.mp4"
+  },
+  {
+    id: "whitelabel",
+    name: "WhiteLabel Watches",
+    role: "Premium E-commerce",
+    desc: "Editorial storefront with smooth micro-interactions, spring mechanics, and animations.",
+    link: "https://whitelabelwatches.netlify.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-wrist-watch-mechanism-rotating-close-up-42023-large.mp4"
+  },
+  {
+    id: "nit",
+    name: "NIT Grievance Portal",
+    role: "System Administration",
+    desc: "Secure role-based dashboard handling query pipelines and student grievance logs.",
+    link: "https://github.com/mr-umar-ahmed",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-finger-pointing-at-a-screen-showing-charts-34352-large.mp4"
+  }
 ];
 
 const certs = [
@@ -97,11 +125,14 @@ export default function Contact() {
               const isActive = hoveredCard === card.id;
 
               return (
-                <div
+                <a
                   key={card.id}
+                  href={card.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredCard(card.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between aspect-square group/item ${
+                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between min-h-[350px] group/item ${
                     isDimmed ? "opacity-30 scale-[0.98]" : "opacity-100 scale-100"
                   } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark" : ""}`}
                 >
@@ -116,6 +147,28 @@ export default function Contact() {
                     />
                   </div>
 
+                  {/* Micro Video Playback Screen */}
+                  <div className="w-full aspect-video bg-black/40 dark:bg-black/70 border border-black/5 dark:border-white/5 rounded relative overflow-hidden flex items-center justify-center my-4 group-hover/item:border-accent/30 dark:group-hover/item:border-accent-dark/30 transition-colors">
+                    <video
+                      src={card.videoUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover/item:opacity-55 transition-opacity"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                    
+                    {/* Pulsing indicator */}
+                    <div className="w-6 h-6 rounded-full bg-accent/20 dark:bg-accent-dark/20 border border-accent/30 dark:border-accent-dark/30 flex items-center justify-center text-accent dark:text-accent-dark relative z-10 transition-transform group-hover/item:scale-110">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent dark:bg-accent-dark animate-pulse" />
+                    </div>
+                    
+                    <div className="absolute bottom-2 left-2 flex items-center gap-1.5 select-none z-10 opacity-60">
+                      <span className="text-[7px] font-mono text-white/60 tracking-wider">LIVE_DEMO.MP4</span>
+                    </div>
+                  </div>
+
                   <div className="mt-auto space-y-2">
                     <h3 className="text-xl font-bold font-display tracking-tight text-[#1A1A18] dark:text-[#F2F1ED]">
                       {card.name}
@@ -124,7 +177,7 @@ export default function Contact() {
                       {card.desc}
                     </p>
                   </div>
-                </div>
+                </a>
               );
             })}
           </div>

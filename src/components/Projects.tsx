@@ -9,15 +9,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
+    id: "veris",
+    title: "VERIS Secure Media",
+    subtitle: "Detect Use",
+    desc: "The ultimate cryptographic command center. Authenticate digital assets, embed invisible ownership signatures, and flag misappropriation across the web.",
+    tech: ["Web3", "Cryptography", "Next.js", "TypeScript", "Tailwind CSS"],
+    index: "01",
+    url: "veris-blue.vercel.app",
+    color: "rgba(255, 92, 51, 0.05)",
+    icon: Shield,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-binary-code-31863-large.mp4"
+  },
+  {
     id: "sparx",
     title: "Sparx Browser",
     subtitle: "Privacy-First AI Browser",
     desc: "Local privacy-first AI browser incorporating LLMs directly in the runtime for instant query processing, context management, and offline assistance.",
     tech: ["Electron", "React", "Llama 3", "Node.js", "Tailwind CSS"],
-    index: "01",
+    index: "02",
     url: "sparx://browser.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-data-center-network-connections-34356-large.mp4"
   },
   {
     id: "prompt",
@@ -25,10 +38,11 @@ const projects = [
     subtitle: "Prompt Tagging & Workflows",
     desc: "Scalable MERN stack storage & tagging library designed for LLM workflow engineers to test, categorize, version control, and export prompts.",
     tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
-    index: "02",
+    index: "03",
     url: "promptvault.io",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-server-room-under-digital-circuit-lines-and-numbers-31846-large.mp4"
   },
   {
     id: "vanets",
@@ -36,10 +50,11 @@ const projects = [
     subtitle: "Decentralized Vehicular Security",
     desc: "Decentralized security infrastructure for vehicular networks utilizing smart contracts to validate routing data and authenticate nodes.",
     tech: ["Solidity", "Ethers.js", "Web3", "Next.js", "Tailwind CSS"],
-    index: "03",
+    index: "04",
     url: "vanet-network.eth",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Shield,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-circuit-board-details-with-glowing-nodes-and-lines-31872-large.mp4"
   },
   {
     id: "rahi",
@@ -47,10 +62,11 @@ const projects = [
     subtitle: "Career Mapping System",
     desc: "Role-based career guidance platform mapping personalized educational steps, courses, and resources for rural students with custom learning tracks.",
     tech: ["React.js", "Firebase", "CSS Modules", "Chart.js"],
-    index: "04",
+    index: "05",
     url: "rahi-guide.org",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-glowing-lines-of-light-on-a-black-background-34289-large.mp4"
   },
   {
     id: "hospital",
@@ -58,10 +74,11 @@ const projects = [
     subtitle: "Healthcare Routing System",
     desc: "Multi-role queue routing system managing token allocation, patient triage routing, and real-time waiting logs in regional health centers.",
     tech: ["Node.js", "Express", "React", "MongoDB", "Socket.io"],
-    index: "05",
+    index: "06",
     url: "queue-health.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-network-connection-lines-and-glowing-dots-34293-large.mp4"
   },
 ];
 
@@ -216,31 +233,31 @@ export default function Projects() {
                         {proj.url}
                       </div>
                     </div>
-                    {/* Visual Graphic */}
-                    <div className="flex-1 p-6 flex flex-col justify-between bg-gradient-to-br from-[#0c0d10] to-[#151619] relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(198,255,58,0.08),transparent_50%)]" />
-                      
-                      <div className="flex justify-between items-center z-10">
-                        <Icon className="w-8 h-8 text-accent dark:text-accent-dark opacity-60" />
-                        <span className="text-[3vw] lg:text-[2vw] font-display font-black text-white/5 font-mono select-none">
-                          SYS.{proj.index}
-                        </span>
-                      </div>
+                    {/* Visual Graphic - Video Player Placeholder */}
+                    <div className="flex-1 relative overflow-hidden bg-black flex items-center justify-center">
+                      <video
+                        src={proj.videoUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover opacity-80"
+                      />
+                      {/* Dark screen shading */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
-                      <div className="space-y-3 z-10 mt-6 select-none pointer-events-none">
-                        <div className="h-1 bg-accent/40 dark:bg-accent-dark/40 w-1/3 rounded" />
-                        <div className="h-1 bg-black/10 dark:bg-white/10 w-2/3 rounded" />
-                        <div className="h-1 bg-black/5 dark:bg-white/5 w-1/2 rounded" />
-                      </div>
-
-                      <div className="flex justify-between items-end mt-8 z-10">
-                        <div className="flex gap-1">
-                          <div className="w-5 h-2 bg-black/10 dark:bg-white/10 rounded-sm" />
-                          <div className="w-8 h-2 bg-accent/20 dark:bg-accent-dark/20 rounded-sm" />
-                          <div className="w-4 h-2 bg-black/5 dark:bg-white/5 rounded-sm" />
+                      {/* Video Player Floating controls to make it look like a mockup */}
+                      <div className="absolute inset-x-4 bottom-4 flex justify-between items-center z-10 select-none">
+                        <div className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full bg-accent/20 dark:bg-accent-dark/20 flex items-center justify-center border border-accent/20 dark:border-accent-dark/20 text-accent dark:text-accent-dark">
+                            <div className="w-1.5 h-1.5 bg-accent dark:bg-accent-dark rounded-full animate-ping" />
+                          </div>
+                          <span className="text-[9px] font-mono tracking-widest text-white/70">
+                            SYS.{proj.index} // LIVE PLAY
+                          </span>
                         </div>
-                        <div className="w-4 h-4 rounded-full bg-accent/10 dark:bg-accent-dark/10 border border-accent/20 dark:border-accent-dark/20 flex items-center justify-center">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent dark:bg-accent-dark" />
+                        <div className="h-1 bg-white/20 w-24 rounded overflow-hidden relative">
+                          <div className="absolute top-0 left-0 h-full bg-accent dark:bg-accent-dark w-2/3 animate-pulse" />
                         </div>
                       </div>
                     </div>
