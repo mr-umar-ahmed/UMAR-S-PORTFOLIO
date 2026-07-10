@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { ArrowRight, Github, Linkedin, Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, Send, CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
 
 const freelanceCards = [
@@ -55,6 +55,7 @@ export default function Contact() {
   const social1 = useMagnetic(0.3);
   const social2 = useMagnetic(0.3);
   const social3 = useMagnetic(0.3);
+  const social4 = useMagnetic(0.3);
 
   // Form states
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,7 +74,7 @@ export default function Contact() {
     if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE" || accessKey === "") {
       // Fallback redirect if key is not configured
       setTimeout(() => {
-        window.location.href = `mailto:mr.umar.ahmed@outlook.com?subject=Portfolio Inquiry from ${name}&body=Sender: ${email}%0D%0A%0D%0A${message}`;
+         window.location.href = `mailto:umarahmedahmed24@gmail.com?subject=Portfolio Inquiry from ${name}&body=Sender: ${email}%0D%0A%0D%0A${message}`;
         setSubmitStatus("success");
         setIsSubmitting(false);
       }, 500);
@@ -96,6 +97,24 @@ export default function Contact() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleWhatsAppSubmit = () => {
+    const nameEl = document.querySelector('input[name="name"]') as HTMLInputElement;
+    const emailEl = document.querySelector('input[name="email"]') as HTMLInputElement;
+    const messageEl = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+
+    const name = nameEl?.value || "";
+    const email = emailEl?.value || "";
+    const message = messageEl?.value || "";
+
+    if (!name || !email || !message) {
+      alert("Please fill out Name, Email, and Message before launching WhatsApp dispatch.");
+      return;
+    }
+
+    const text = encodeURIComponent(`Hello Umar,\n\nName: ${name}\nEmail: ${email}\n\nMessage: ${message}`);
+    window.open(`https://wa.me/917204060651?text=${text}`, "_blank");
   };
 
   return (
@@ -236,10 +255,20 @@ export default function Contact() {
               </div>
               <div ref={social3}>
                 <a
-                  href="mailto:mr.umar.ahmed@outlook.com"
+                  href="mailto:umarahmedahmed24@gmail.com"
                   className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center justify-center text-muted dark:text-muted-dark"
                 >
                   <Mail className="w-5 h-5" />
+                </a>
+              </div>
+              <div ref={social4}>
+                <a
+                  href="https://wa.me/917204060651"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center justify-center text-muted dark:text-muted-dark"
+                >
+                  <MessageCircle className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -294,16 +323,27 @@ export default function Contact() {
                 </label>
               </div>
 
-              {/* Submit button */}
+              {/* Submit buttons */}
               <div className="flex flex-col gap-4">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4 bg-accent dark:bg-accent-dark hover:bg-black dark:hover:bg-white text-white dark:text-black hover:text-white dark:hover:text-black font-display font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center gap-2 group cursor-none"
-                >
-                  {isSubmitting ? "TRANSMITTING..." : "TRANSMIT DISPATCH"}
-                  <Send className="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 py-4 bg-[#1A1A18] dark:bg-[#F2F1ED] hover:bg-accent dark:hover:bg-accent-dark text-white dark:text-black hover:text-black dark:hover:text-black font-display font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center gap-2 group cursor-none"
+                  >
+                    {isSubmitting ? "TRANSMITTING..." : "TRANSMIT EMAIL"}
+                    <Mail className="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppSubmit}
+                    className="flex-1 py-4 bg-accent dark:bg-accent-dark hover:bg-black dark:hover:bg-white text-white dark:text-black hover:text-white dark:hover:text-black font-display font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center gap-2 group cursor-none"
+                  >
+                    TRANSMIT WHATSAPP
+                    <MessageCircle className="w-3.5 h-3.5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+                </div>
 
                 {submitStatus === "success" && (
                   <div className="flex items-center gap-2 text-accent dark:text-accent-dark text-xs font-mono select-none">
