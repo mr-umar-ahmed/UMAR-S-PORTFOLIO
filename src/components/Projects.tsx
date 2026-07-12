@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Shield, Layers, Users, MapPin, Cpu } from "lucide-react";
+import { ArrowUpRight, Shield, Layers, Users, MapPin, Cpu, Star } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -79,6 +79,18 @@ const projects = [
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-network-connection-lines-and-glowing-dots-34293-large.mp4"
+  },
+  {
+    id: "deshstack",
+    title: "DeshStack SaaS",
+    subtitle: "Indian Software Reviews",
+    desc: "Production-grade, Gartner-style B2B software review and discovery platform designed specifically for Indian-built software, displaying DPDP compliance, GST-ready invoicing status, and Razorpay integrations.",
+    tech: ["Next.js", "React", "Clerk Auth", "Tailwind CSS", "TypeScript"],
+    index: "07",
+    url: "desh-stack.vercel.app",
+    color: "rgba(255, 92, 51, 0.05)",
+    icon: Star,
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-dns-data-analysis-concept-31835-large.mp4"
   },
 ];
 

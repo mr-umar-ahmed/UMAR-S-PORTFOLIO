@@ -36,6 +36,38 @@ const freelanceCards = [
     desc: "Secure role-based dashboard handling query pipelines and student grievance logs.",
     link: "https://github.com/mr-umar-ahmed",
     videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-finger-pointing-at-a-screen-showing-charts-34352-large.mp4"
+  },
+  {
+    id: "crafiraa-portfolio",
+    name: "Crafiraa Portfolio",
+    role: "Creative Agency",
+    desc: "Highly interactive agency showcase built with immersive 3D Spline backgrounds and elegant scroll animations.",
+    link: "https://crafiraa-protfolio.netlify.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-binary-code-31863-large.mp4"
+  },
+  {
+    id: "crafiraa-studio",
+    name: "Crafiraa Studio",
+    role: "Digital Experience",
+    desc: "Modern landing experience built on Next.js featuring smooth transitions, 3D interactive graphics, and micro-interactions.",
+    link: "https://crafiraa-o0.web.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-data-center-network-connections-34356-large.mp4"
+  },
+  {
+    id: "localfix",
+    name: "LocalFix",
+    role: "Service Marketplace",
+    desc: "Hyperlocal B2C service platform connecting rural households in India with verified professionals and contractors.",
+    link: "https://local-fixz.netlify.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-finger-pointing-at-a-screen-showing-charts-34352-large.mp4"
+  },
+  {
+    id: "unveil-spark",
+    name: "Unveil Spark Tech",
+    role: "Tech Agency",
+    desc: "Premium tech agency website displaying elegant typography, layout-driven animations, and theme-matching visual effects.",
+    link: "http://unveil-spark-tech.web.app/",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-server-room-under-digital-circuit-lines-and-numbers-31846-large.mp4"
   }
 ];
 
