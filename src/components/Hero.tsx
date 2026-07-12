@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero({ active }: { active: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -21,6 +22,7 @@ export default function Hero({ active }: { active: boolean }) {
 
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
+  // Pointer movement tracking (mouse + touch screens)
   useEffect(() => {
     const updatePointer = (clientX: number, clientY: number) => {
       const { clientWidth, clientHeight } = document.documentElement;
@@ -54,6 +56,169 @@ export default function Hero({ active }: { active: boolean }) {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [mousePos]);
+
+  // High-performance HTML5 Canvas Constellation Network
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Particle[] = [];
+    const particleCount = 65;
+    const connectionDistance = 115;
+    const forceRadius = 160;
+
+    class Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+
+      constructor(w: number, h: number) {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        // Slow organic floating speed
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = (Math.random() - 0.5) * 0.35;
+        this.radius = Math.random() * 1.5 + 1.2;
+      }
+
+      update(w: number, h: number, mx: number, my: number) {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce boundaries
+        if (this.x < 0 || this.x > w) this.vx = -this.vx;
+        if (this.y < 0 || this.y > h) this.vy = -this.vy;
+
+        // Containment check
+        if (this.x < 0) this.x = 0;
+        if (this.x > w) this.x = w;
+        if (this.y < 0) this.y = 0;
+        if (this.y > h) this.y = h;
+
+        // Tactile cursor repulsion force
+        const dx = this.x - mx;
+        const dy = this.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < forceRadius) {
+          const force = (forceRadius - dist) / forceRadius;
+          this.x += (dx / dist) * force * 1.2;
+          this.y += (dy / dist) * force * 1.2;
+        }
+      }
+
+      draw(c: CanvasRenderingContext2D, color: string) {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        c.fillStyle = color;
+        c.fill();
+      }
+    }
+
+    const resizeCanvas = () => {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(canvas.width, canvas.height));
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const animate = () => {
+      if (!canvas || !ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const mx = (mousePos.x / 100) * canvas.width;
+      const my = (mousePos.y / 100) * canvas.height;
+
+      // Extract current theme accent color dynamically
+      let accentColor = "#C6FF3A"; 
+      if (typeof window !== "undefined") {
+        const computedAccent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
+        if (computedAccent) {
+          accentColor = computedAccent;
+        }
+      }
+
+      // Convert accent color (hex/rgb) into decimal components
+      let r = 198, g = 255, b = 58;
+      if (accentColor.startsWith("#")) {
+        const hex = accentColor.substring(1);
+        r = parseInt(hex.substring(0, 2), 16);
+        g = parseInt(hex.substring(2, 4), 16);
+        b = parseInt(hex.substring(4, 6), 16);
+      } else if (accentColor.startsWith("rgb")) {
+        const rgbVals = accentColor.match(/\d+/g);
+        if (rgbVals && rgbVals.length >= 3) {
+          r = parseInt(rgbVals[0], 10);
+          g = parseInt(rgbVals[1], 10);
+          b = parseInt(rgbVals[2], 10);
+        }
+      }
+
+      // Render & update particles
+      particles.forEach(p => {
+        p.update(canvas.width, canvas.height, mx, my);
+        p.draw(ctx, `rgba(${r}, ${g}, ${b}, 0.5)`);
+      });
+
+      // Draw connection lines between neighboring nodes
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectionDistance) {
+            const alpha = (1 - dist / connectionDistance) * 0.16;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw glowing lines connecting particles directly to cursor coordinates
+      particles.forEach(p => {
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < forceRadius) {
+          const alpha = (1 - dist / forceRadius) * 0.22;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mx, my);
+          ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+          ctx.lineWidth = 0.85;
+          ctx.stroke();
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
     };
   }, [mousePos]);
 
@@ -127,14 +292,8 @@ export default function Hero({ active }: { active: boolean }) {
       ref={containerRef}
       className="relative w-full min-h-screen flex flex-col justify-between p-8 md:p-12 overflow-hidden bg-background dark:bg-background-dark transition-colors duration-500"
     >
-      {/* Background Spotlight Masked Grid */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] grid-lines"
-        style={{
-          maskImage: `radial-gradient(circle 350px at ${mousePos.x}% ${mousePos.y}%, black 20%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(circle 350px at ${mousePos.x}% ${mousePos.y}%, black 20%, transparent 100%)`,
-        }}
-      >
+      {/* Background Interactive Mesh Glow (Soft color fog) */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.25]">
         <svg
           className="absolute w-[140%] h-[140%] -top-[20%] -left-[20%] blur-[100px]"
           xmlns="http://www.w3.org/2000/svg"
@@ -159,6 +318,12 @@ export default function Hero({ active }: { active: boolean }) {
           <rect width="100%" height="100%" fill="url(#meshGradient3)" />
         </svg>
       </div>
+
+      {/* Background Spotlight Masked Canvas Constellation Network */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 z-0 pointer-events-none"
+      />
 
       {/* Navigation Header */}
       <header ref={navRef} className="relative z-10 w-full flex justify-between items-center select-none">
