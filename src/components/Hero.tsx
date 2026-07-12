@@ -10,218 +10,98 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero({ active }: { active: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
+
+  // Volumetric blob references
+  const blob1Ref = useRef<HTMLDivElement>(null);
+  const blob2Ref = useRef<HTMLDivElement>(null);
+  const blob3Ref = useRef<HTMLDivElement>(null);
 
   const exploreBtnRef = useMagnetic(0.25);
   const navItem1 = useMagnetic(0.25);
   const navItem2 = useMagnetic(0.25);
   const navItem3 = useMagnetic(0.25);
 
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  // Pointer movement tracking (mouse + touch screens)
+  // Detect touch capability to safely optimize mobile interactions
   useEffect(() => {
-    const updatePointer = (clientX: number, clientY: number) => {
-      const { clientWidth, clientHeight } = document.documentElement;
-      const x = (clientX / clientWidth) * 100;
-      const y = (clientY / clientHeight) * 100;
-      
-      gsap.to(mousePos, {
-        x: x,
-        y: y,
-        duration: 2.5,
-        ease: "power2.out",
-        onUpdate: () => {
-          setMousePos({ x: mousePos.x, y: mousePos.y });
-        }
-      });
-    };
+    if (typeof window !== "undefined") {
+      setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+    }
+  }, []);
+
+  // Smooth pointer/parallax tracking for desktop view only
+  useEffect(() => {
+    if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      updatePointer(e.clientX, e.clientY);
-    };
+      const { clientWidth, clientHeight } = document.documentElement;
+      // Convert to normalized coordinates (-0.5 to 0.5)
+      const x = (e.clientX / clientWidth) - 0.5;
+      const y = (e.clientY / clientHeight) - 0.5;
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
-      }
+      // Animate blobs with subtle spring-like offsets for depth
+      gsap.to(blob1Ref.current, {
+        x: x * 60,
+        y: y * 60,
+        duration: 2.2,
+        ease: "power2.out",
+      });
+
+      gsap.to(blob2Ref.current, {
+        x: -x * 80,
+        y: -y * 80,
+        duration: 2.8,
+        ease: "power2.out",
+      });
+
+      gsap.to(blob3Ref.current, {
+        x: x * 40,
+        y: -y * 40,
+        duration: 3.2,
+        ease: "power2.out",
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [mousePos]);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isTouchDevice]);
 
-  // High-performance HTML5 Canvas Constellation Network
+  // Organic drifting & scaling loops
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let particles: Particle[] = [];
-    const particleCount = 65;
-    const connectionDistance = 115;
-    const forceRadius = 160;
-
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-
-      constructor(w: number, h: number) {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        // Slow organic floating speed
-        this.vx = (Math.random() - 0.5) * 0.35;
-        this.vy = (Math.random() - 0.5) * 0.35;
-        this.radius = Math.random() * 1.5 + 1.2;
-      }
-
-      update(w: number, h: number, mx: number, my: number) {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Bounce boundaries
-        if (this.x < 0 || this.x > w) this.vx = -this.vx;
-        if (this.y < 0 || this.y > h) this.vy = -this.vy;
-
-        // Containment check
-        if (this.x < 0) this.x = 0;
-        if (this.x > w) this.x = w;
-        if (this.y < 0) this.y = 0;
-        if (this.y > h) this.y = h;
-
-        // Tactile cursor repulsion force
-        const dx = this.x - mx;
-        const dy = this.y - my;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < forceRadius) {
-          const force = (forceRadius - dist) / forceRadius;
-          this.x += (dx / dist) * force * 1.2;
-          this.y += (dy / dist) * force * 1.2;
-        }
-      }
-
-      draw(c: CanvasRenderingContext2D, color: string) {
-        c.beginPath();
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        c.fillStyle = color;
-        c.fill();
-      }
-    }
-
-    const resizeCanvas = () => {
-      if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(canvas.width, canvas.height));
-      }
-    };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const animate = () => {
-      if (!canvas || !ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const mx = (mousePos.x / 100) * canvas.width;
-      const my = (mousePos.y / 100) * canvas.height;
-
-      // Extract current theme accent color dynamically
-      let accentColor = "#C6FF3A"; 
-      if (typeof window !== "undefined") {
-        const computedAccent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
-        if (computedAccent) {
-          accentColor = computedAccent;
-        }
-      }
-
-      // Convert accent color (hex/rgb) into decimal components
-      let r = 198, g = 255, b = 58;
-      if (accentColor.startsWith("#")) {
-        const hex = accentColor.substring(1);
-        r = parseInt(hex.substring(0, 2), 16);
-        g = parseInt(hex.substring(2, 4), 16);
-        b = parseInt(hex.substring(4, 6), 16);
-      } else if (accentColor.startsWith("rgb")) {
-        const rgbVals = accentColor.match(/\d+/g);
-        if (rgbVals && rgbVals.length >= 3) {
-          r = parseInt(rgbVals[0], 10);
-          g = parseInt(rgbVals[1], 10);
-          b = parseInt(rgbVals[2], 10);
-        }
-      }
-
-      // Render & update particles
-      particles.forEach(p => {
-        p.update(canvas.width, canvas.height, mx, my);
-        p.draw(ctx, `rgba(${r}, ${g}, ${b}, 0.5)`);
+    const ctx = gsap.context(() => {
+      gsap.to(blob1Ref.current, {
+        scale: 1.12,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
 
-      // Draw connection lines between neighboring nodes
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < connectionDistance) {
-            const alpha = (1 - dist / connectionDistance) * 0.16;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-            ctx.lineWidth = 0.7;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw glowing lines connecting particles directly to cursor coordinates
-      particles.forEach(p => {
-        const dx = p.x - mx;
-        const dy = p.y - my;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < forceRadius) {
-          const alpha = (1 - dist / forceRadius) * 0.22;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mx, my);
-          ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-          ctx.lineWidth = 0.85;
-          ctx.stroke();
-        }
+      gsap.to(blob2Ref.current, {
+        scale: 0.88,
+        duration: 9,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
 
-      animationFrameId = requestAnimationFrame(animate);
-    };
+      gsap.to(blob3Ref.current, {
+        scale: 1.15,
+        duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    });
 
-    animate();
+    return () => ctx.revert();
+  }, []);
 
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [mousePos]);
-
+  // Section Entrance Reveals
   useEffect(() => {
     if (!active) return;
 
@@ -263,10 +143,10 @@ export default function Hero({ active }: { active: boolean }) {
         { opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.7)", delay: 0.9 }
       );
 
-      // Background Parallax
+      // Section visual transition parallax on scroll
       gsap.to(".grid-lines", {
-        y: "20%",
-        scale: 1.1,
+        y: "15%",
+        scale: 1.05,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -292,38 +172,27 @@ export default function Hero({ active }: { active: boolean }) {
       ref={containerRef}
       className="relative w-full min-h-screen flex flex-col justify-between p-8 md:p-12 overflow-hidden bg-background dark:bg-background-dark transition-colors duration-500"
     >
-      {/* Background Interactive Mesh Glow (Soft color fog) */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.25]">
-        <svg
-          className="absolute w-[140%] h-[140%] -top-[20%] -left-[20%] blur-[100px]"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <radialGradient id="meshGradient1" cx={`${mousePos.x}%`} cy={`${mousePos.y}%`} r="35%">
-              <stop offset="0%" className="mesh-stop-1" />
-              <stop offset="100%" className="mesh-stop-2" />
-            </radialGradient>
-            <radialGradient id="meshGradient2" cx={`${100 - mousePos.x}%`} cy={`${100 - mousePos.y}%`} r="40%">
-              <stop offset="0%" className="mesh-stop-3" />
-              <stop offset="100%" className="mesh-stop-2" />
-            </radialGradient>
-            {/* Added third gradient stop for electric blue overlay on dark mode */}
-            <radialGradient id="meshGradient3" cx={`${mousePos.y}%`} cy={`${100 - mousePos.x}%`} r="30%">
-              <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#meshGradient1)" />
-          <rect width="100%" height="100%" fill="url(#meshGradient2)" />
-          <rect width="100%" height="100%" fill="url(#meshGradient3)" />
-        </svg>
+      {/* Background Volumetric Liquid Blobs */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-50 dark:opacity-60">
+        {/* Blob 1: Accent Accent (Burnt Orange / Acid Green) */}
+        <div
+          ref={blob1Ref}
+          className="absolute w-[60vw] h-[60vw] md:w-[35vw] md:h-[35vw] -top-[10%] -left-[10%] rounded-full bg-accent/8 dark:bg-accent/12 blur-[100px] md:blur-[140px] transition-colors duration-500"
+        />
+        {/* Blob 2: Cyan Accent (Teal / Cyan) */}
+        <div
+          ref={blob2Ref}
+          className="absolute w-[65vw] h-[65vw] md:w-[38vw] md:h-[38vw] top-[25%] -right-[15%] rounded-full bg-[#00E5FF]/6 dark:bg-[#00E5FF]/10 blur-[100px] md:blur-[140px] transition-colors duration-500"
+        />
+        {/* Blob 3: Deep Peach / Soft Red Accent */}
+        <div
+          ref={blob3Ref}
+          className="absolute w-[55vw] h-[55vw] md:w-[28vw] md:h-[28vw] -bottom-[10%] left-[25%] rounded-full bg-[#FF5C33]/5 dark:bg-[#FF5C33]/8 blur-[100px] md:blur-[140px] transition-colors duration-500"
+        />
       </div>
 
-      {/* Background Spotlight Masked Canvas Constellation Network */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 z-0 pointer-events-none"
-      />
+      {/* Background Grid Lines (Subtle visual transition) */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] dark:opacity-[0.04] grid-lines" />
 
       {/* Navigation Header */}
       <header ref={navRef} className="relative z-10 w-full flex justify-between items-center select-none">
