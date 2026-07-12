@@ -22,10 +22,10 @@ export default function Hero({ active }: { active: boolean }) {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const updatePointer = (clientX: number, clientY: number) => {
       const { clientWidth, clientHeight } = document.documentElement;
-      const x = (e.clientX / clientWidth) * 100;
-      const y = (e.clientY / clientHeight) * 100;
+      const x = (clientX / clientWidth) * 100;
+      const y = (clientY / clientHeight) * 100;
       
       gsap.to(mousePos, {
         x: x,
@@ -38,8 +38,23 @@ export default function Hero({ active }: { active: boolean }) {
       });
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      updatePointer(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
   }, [mousePos]);
 
   useEffect(() => {
@@ -55,8 +70,8 @@ export default function Hero({ active }: { active: boolean }) {
 
         gsap.to(heading.querySelectorAll(".word"), {
           translateY: "0%",
-          duration: 1.4,
-          ease: "power4.out",
+          duration: 1.2,
+          ease: "back.out(1.5)",
           stagger: 0.04,
           delay: 0.1,
         });
@@ -112,8 +127,14 @@ export default function Hero({ active }: { active: boolean }) {
       ref={containerRef}
       className="relative w-full min-h-screen flex flex-col justify-between p-8 md:p-12 overflow-hidden bg-background dark:bg-background-dark transition-colors duration-500"
     >
-      {/* Background Interactive Mesh Grid */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] grid-lines">
+      {/* Background Spotlight Masked Grid */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] grid-lines"
+        style={{
+          maskImage: `radial-gradient(circle 350px at ${mousePos.x}% ${mousePos.y}%, black 20%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(circle 350px at ${mousePos.x}% ${mousePos.y}%, black 20%, transparent 100%)`,
+        }}
+      >
         <svg
           className="absolute w-[140%] h-[140%] -top-[20%] -left-[20%] blur-[100px]"
           xmlns="http://www.w3.org/2000/svg"
@@ -127,9 +148,15 @@ export default function Hero({ active }: { active: boolean }) {
               <stop offset="0%" className="mesh-stop-3" />
               <stop offset="100%" className="mesh-stop-2" />
             </radialGradient>
+            {/* Added third gradient stop for electric blue overlay on dark mode */}
+            <radialGradient id="meshGradient3" cx={`${mousePos.y}%`} cy={`${100 - mousePos.x}%`} r="30%">
+              <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+            </radialGradient>
           </defs>
           <rect width="100%" height="100%" fill="url(#meshGradient1)" />
           <rect width="100%" height="100%" fill="url(#meshGradient2)" />
+          <rect width="100%" height="100%" fill="url(#meshGradient3)" />
         </svg>
       </div>
 
