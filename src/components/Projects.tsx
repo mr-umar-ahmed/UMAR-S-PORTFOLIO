@@ -110,7 +110,7 @@ export default function Projects() {
         const panels = section.querySelectorAll(".project-panel");
         const amountToScroll = section.scrollWidth - window.innerWidth;
 
-        gsap.to(section, {
+        const scrollTween = gsap.to(section, {
           x: -amountToScroll,
           ease: "none",
           scrollTrigger: {
@@ -134,7 +134,7 @@ export default function Projects() {
               ease: "none",
               scrollTrigger: {
                 trigger: panel,
-                containerAnimation: gsap.globalTimeline, // sync horizontal scroll
+                containerAnimation: scrollTween, // correct reference to actual scroll tween
                 start: "left right",
                 end: "right left",
                 scrub: true,
@@ -157,7 +157,7 @@ export default function Projects() {
           className="flex flex-col lg:flex-row w-full h-full lg:whitespace-nowrap"
         >
           {/* Header Panel */}
-          <div className="project-panel w-full lg:w-[45vw] flex-shrink-0 h-screen bg-background dark:bg-background-dark flex flex-col justify-between p-8 md:p-16 relative border-r border-black/5 dark:border-white/5 transition-colors duration-500">
+          <div className="project-panel w-full lg:w-[45vw] flex-shrink-0 h-[100dvh] lg:h-screen bg-background dark:bg-background-dark flex flex-col justify-between p-8 md:p-16 relative sticky top-0 lg:relative z-[1] border-r border-black/5 dark:border-white/5 transition-colors duration-500">
             <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
               04/
             </div>
@@ -183,8 +183,8 @@ export default function Projects() {
             return (
               <div
                 key={proj.id}
-                className="project-panel w-full lg:w-[85vw] flex-shrink-0 h-screen bg-background dark:bg-background-dark border-r border-black/5 dark:border-white/5 flex flex-col lg:flex-row items-center justify-center p-8 md:p-16 gap-8 lg:gap-16 select-text whitespace-normal transition-colors duration-500"
-                style={{ backgroundColor: proj.color }}
+                className="project-panel w-full lg:w-[85vw] flex-shrink-0 h-[100dvh] lg:h-screen bg-background dark:bg-background-dark border-r border-black/5 dark:border-white/5 flex flex-col lg:flex-row items-center justify-center p-8 md:p-16 gap-8 lg:gap-16 select-text whitespace-normal transition-colors duration-500 sticky top-0 lg:relative"
+                style={{ backgroundColor: proj.color, zIndex: idx + 2 }}
               >
                 {/* Info block */}
                 <div className="w-full lg:w-[40%] flex flex-col justify-center order-2 lg:order-1">

@@ -111,6 +111,22 @@ export default function About() {
           }
         });
       }
+
+      // 4. Text Reveal word-by-word animation
+      const revealWords = containerRef.current?.querySelectorAll(".reveal-word");
+      if (revealWords) {
+        gsap.to(revealWords, {
+          opacity: 1,
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".reveal-text",
+            start: "top 80%",
+            end: "bottom 60%",
+            scrub: true,
+          },
+        });
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -177,8 +193,14 @@ export default function About() {
           </h2>
 
           <div className="space-y-6 text-sm md:text-base font-light text-muted dark:text-muted-dark leading-relaxed select-text font-body">
-            <p className="border-l-[3px] border-accent dark:border-accent-dark pl-6 py-1 text-[#1A1A18] dark:text-[#F2F1ED] font-medium text-lg md:text-xl">
-              &ldquo;I write code that bridges the gap between design systems and complex backends. My work focuses on performance, local-first architectures, and Web3 security.&rdquo;
+            <p className="reveal-text border-l-[3px] border-accent dark:border-accent-dark pl-6 py-1 text-[#1A1A18] dark:text-[#F2F1ED] font-medium text-lg md:text-xl">
+              &ldquo;
+              {"I write code that bridges the gap between design systems and complex backends. My work focuses on performance, local-first architectures, and Web3 security.".split(" ").map((word, i) => (
+                <span key={i} className="reveal-word inline-block mr-1.5 opacity-20">
+                  {word}
+                </span>
+              ))}
+              &rdquo;
             </p>
             <p>
               As a Computer Science student at the National Institute of Technology (NIT), full-stack developer, and the founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">MedX Laboratory</span>, I build production-ready digital products. I combine solid engineering concepts with slick typography and fluid visual structures to create experiences that stand out.

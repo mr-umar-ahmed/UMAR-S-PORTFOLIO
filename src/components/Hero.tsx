@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero({ active }: { active: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,6 +82,19 @@ export default function Hero({ active }: { active: boolean }) {
         { opacity: 0, scale: 0.85 },
         { opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.7)", delay: 0.9 }
       );
+
+      // Background Parallax
+      gsap.to(".grid-lines", {
+        y: "20%",
+        scale: 1.1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
     }, containerRef);
 
     return () => ctx.revert();
