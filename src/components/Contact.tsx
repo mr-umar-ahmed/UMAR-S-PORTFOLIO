@@ -149,8 +149,8 @@ function CertificationsTicker() {
 
   return (
     <div className="w-full border-y border-black/5 dark:border-white/5 py-6 overflow-hidden select-none relative">
-      <div 
-        ref={tickerRef} 
+      <div
+        ref={tickerRef}
         className="flex whitespace-nowrap gap-12 text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted/40 dark:text-muted-dark/40 w-max"
       >
         {doubledCerts.map((cert, index) => (
@@ -161,6 +161,39 @@ function CertificationsTicker() {
         ))}
       </div>
     </div>
+  );
+}
+
+// Hover-triggered lazy loaded video component for shipped solutions
+function ContactVideo({ src, isParentHovered }: { src: string; isParentHovered: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isParentHovered) {
+      // Lazy load source and play on hover
+      video.play().catch((err) => {
+        console.log("Hover video play blocked:", err);
+      });
+    } else {
+      video.pause();
+      // Reset playhead back to start
+      video.currentTime = 0;
+    }
+  }, [isParentHovered]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      loop
+      muted
+      playsInline
+      preload="none"
+      className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover/item:opacity-55 transition-opacity"
+    />
   );
 }
 
@@ -181,7 +214,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
     const email = formData.get("email");
@@ -245,7 +278,7 @@ export default function Contact() {
       </div>
 
       <div className="max-w-7xl mx-auto w-full flex flex-col gap-24 relative z-10 select-text">
-        
+
         {/* Shipped Freelance Grid */}
         <div className="w-full flex flex-col">
           <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-6">
@@ -270,38 +303,29 @@ export default function Contact() {
                   data-cursor-text="VISIT"
                   onMouseEnter={() => setHoveredCard(card.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between min-h-[350px] group/item cursor-none ${
-                    isDimmed ? "opacity-30 scale-[0.98]" : "opacity-100 scale-100"
-                  } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark shadow-md" : ""}`}
+                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between min-h-[350px] group/item cursor-none ${isDimmed ? "opacity-30 scale-[0.98]" : "opacity-100 scale-100"
+                    } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark shadow-md" : ""}`}
                 >
                   <div className="flex justify-between items-start">
                     <span className="text-[10px] font-mono tracking-widest text-muted dark:text-muted-dark uppercase">
                       {card.role}
                     </span>
                     <ArrowRight
-                      className={`w-4 h-4 text-accent dark:text-accent-dark transition-transform duration-300 ${
-                        isActive ? "translate-x-1 -rotate-45" : "rotate-0"
-                      }`}
+                      className={`w-4 h-4 text-accent dark:text-accent-dark transition-transform duration-300 ${isActive ? "translate-x-1 -rotate-45" : "rotate-0"
+                        }`}
                     />
                   </div>
 
                   {/* Micro Video Playback Screen */}
                   <div className="w-full aspect-video bg-black/40 dark:bg-black/70 border border-black/5 dark:border-white/5 rounded relative overflow-hidden flex items-center justify-center my-4 group-hover/item:border-accent/30 dark:group-hover/item:border-accent-dark/30 transition-colors">
-                    <video
-                      src={card.videoUrl}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover/item:opacity-55 transition-opacity"
-                    />
+                    <ContactVideo src={card.videoUrl} isParentHovered={isActive} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-                    
+
                     {/* Pulsing indicator */}
                     <div className="w-6 h-6 rounded-full bg-accent/20 dark:bg-accent-dark/20 border border-accent/30 dark:border-accent-dark/30 flex items-center justify-center text-accent dark:text-accent-dark relative z-10 transition-transform group-hover/item:scale-110">
                       <div className="w-1.5 h-1.5 rounded-full bg-accent dark:bg-accent-dark animate-pulse" />
                     </div>
-                    
+
                     <div className="absolute bottom-2 left-2 flex items-center gap-1.5 select-none z-10 opacity-60">
                       <span className="text-[7px] font-mono text-white/60 tracking-wider">LIVE_DEMO.MP4</span>
                     </div>
@@ -326,7 +350,7 @@ export default function Contact() {
 
         {/* Contact details & Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
+
           {/* Left Headline & Social Info */}
           <div className="lg:col-span-5 space-y-8 flex flex-col justify-between h-full">
             <div className="space-y-6">
@@ -402,7 +426,7 @@ export default function Contact() {
                   />
                   {/* Drawing highlight underline */}
                   <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
-                  
+
                   <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     YOUR NAME
                   </label>
@@ -418,7 +442,7 @@ export default function Contact() {
                   />
                   {/* Drawing highlight underline */}
                   <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
-                  
+
                   <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     EMAIL ADDRESS
                   </label>
@@ -436,7 +460,7 @@ export default function Contact() {
                 />
                 {/* Drawing highlight underline */}
                 <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
-                
+
                 <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                   YOUR DISPATCH MESSAGE
                 </label>

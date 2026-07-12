@@ -15,7 +15,7 @@ const projects = [
     desc: "The ultimate cryptographic command center. Authenticate digital assets, embed invisible ownership signatures, and flag misappropriation across the web.",
     tech: ["Web3", "Cryptography", "Next.js", "TypeScript", "Tailwind CSS"],
     index: "01",
-    url: "veris-blue.vercel.app",
+    url: "https://veris-blue.vercel.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
     videoUrl: "/videos/veris-demo.mp4"
@@ -27,7 +27,7 @@ const projects = [
     desc: "Local privacy-first AI browser incorporating LLMs directly in the runtime for instant query processing, context management, and offline assistance.",
     tech: ["Electron", "React", "Llama 3", "Node.js", "Tailwind CSS"],
     index: "02",
-    url: "sparx://browser.local",
+    url: "https://sparx-browser.vercel.app/",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
     videoUrl: "/videos/sparx-demo.mp4"
@@ -39,7 +39,7 @@ const projects = [
     desc: "Scalable MERN stack storage & tagging library designed for LLM workflow engineers to test, categorize, version control, and export prompts.",
     tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
     index: "03",
-    url: "promptvault.io",
+    url: "https://prompt-vault-app.netlify.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
     videoUrl: "/videos/prompt-demo.mp4"
@@ -63,7 +63,7 @@ const projects = [
     desc: "Role-based career guidance platform mapping personalized educational steps, courses, and resources for rural students with custom learning tracks.",
     tech: ["React.js", "Firebase", "CSS Modules", "Chart.js"],
     index: "05",
-    url: "rahi-guide.org",
+    url: "https://rahi-career-guide.web.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
     videoUrl: "/videos/rahi-demo.mp4"
@@ -75,7 +75,7 @@ const projects = [
     desc: "Multi-role queue routing system managing token allocation, patient triage routing, and real-time waiting logs in regional health centers.",
     tech: ["Node.js", "Express", "React", "MongoDB", "Socket.io"],
     index: "06",
-    url: "queue-health.local",
+    url: "https://hospital-queue-management-nqfg.onrender.com/",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
     videoUrl: "/videos/hospital-demo.mp4"
@@ -87,7 +87,7 @@ const projects = [
     desc: "Production-grade, Gartner-style B2B software review and discovery platform designed specifically for Indian-built software, displaying DPDP compliance, GST-ready invoicing status, and Razorpay integrations.",
     tech: ["Next.js", "React", "Clerk Auth", "Tailwind CSS", "TypeScript"],
     index: "07",
-    url: "desh-stack.vercel.app",
+    url: "https://desh-stack.vercel.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Star,
     videoUrl: "/videos/deshstack-demo.mp4"
@@ -146,6 +146,44 @@ function TiltMockup({ children }: { children: React.ReactNode }) {
     >
       {children}
     </div>
+  );
+}
+
+// Lazy-loaded video component using IntersectionObserver to prevent lag
+function ProjectVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch((err) => {
+            console.log("Observer play blocked:", err);
+          });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      className="absolute inset-0 w-full h-full object-cover opacity-80"
+    />
   );
 }
 
@@ -271,7 +309,7 @@ export default function Projects() {
                   className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20 z-0"
                   style={{ backgroundColor: proj.color }}
                 />
-                
+
                 {/* Info block */}
                 <div className="project-info w-full lg:w-[40%] flex flex-col justify-center order-2 lg:order-1 relative z-10">
                   <div className="reveal-item flex items-center gap-3 mb-6">
@@ -288,7 +326,7 @@ export default function Projects() {
                   <p className="reveal-item text-sm md:text-base text-muted dark:text-muted-dark font-body leading-relaxed mb-8">
                     {proj.desc}
                   </p>
-                  
+
                   {/* Tech stack tags */}
                   <div className="reveal-item flex flex-wrap gap-2 mb-8">
                     {proj.tech.map((t, i) => (
@@ -311,7 +349,7 @@ export default function Projects() {
                       data-cursor-text="CODE"
                       className="group/btn flex items-center gap-2 border-b border-accent dark:border-accent-dark pb-2 text-accent dark:text-accent-dark text-xs font-semibold font-display tracking-widest uppercase transition-all hover:text-[#1A1A18] dark:hover:text-[#F2F1ED] hover:border-[#1A1A18] dark:hover:border-[#F2F1ED]"
                     >
-                      EXPLORE REPOSITORY
+                      EXPLORE REPOSITORIES
                       <ArrowUpRight className="w-4 h-4 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </a>
                   </div>
@@ -321,7 +359,7 @@ export default function Projects() {
                 <div className="w-full lg:w-[60%] flex items-center justify-center order-1 lg:order-2 relative z-10">
                   <div className="mockup-parallax-wrapper w-full aspect-video relative">
                     <TiltMockup>
-                      <div 
+                      <div
                         data-cursor="view"
                         data-cursor-text="DEMO"
                         className="mockup-inner relative w-full h-full bg-surface/50 dark:bg-surface-dark/40 glassmorphism rounded-md border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl flex flex-col group/mockup cursor-none"
@@ -339,14 +377,7 @@ export default function Projects() {
                         </div>
                         {/* Visual Graphic - Video Player Placeholder */}
                         <div className="flex-1 relative overflow-hidden bg-black flex items-center justify-center">
-                          <video
-                            src={proj.videoUrl}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="absolute inset-0 w-full h-full object-cover opacity-80"
-                          />
+                          <ProjectVideo src={proj.videoUrl} />
                           {/* Dark screen shading */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
