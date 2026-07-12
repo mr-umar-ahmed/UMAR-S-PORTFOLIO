@@ -186,8 +186,8 @@ export default function About() {
           {/* Counters Bento Grid */}
           <div ref={statsRef} className="grid grid-cols-3 gap-4 md:gap-6 select-text">
             {stats.map((stat, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="stat-block flex flex-col justify-between p-4 md:p-6 bg-background/30 dark:bg-surface-dark/40 glassmorphism border border-black/5 dark:border-white/5 rounded-[4px] hover:border-accent/30 dark:hover:border-accent-dark/30 hover:scale-[1.03] transition-all duration-300"
               >
                 <span className="text-[9vw] lg:text-[3.5vw] font-display font-black leading-none text-accent dark:text-accent-dark tracking-tighter tabular-nums">
@@ -224,7 +224,7 @@ export default function About() {
               &rdquo;
             </p>
             <p>
-              As a Computer Science student at the National Institute of Technology (NIT), full-stack developer, and the founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">MedX Laboratory</span>, I build production-ready digital products. I combine solid engineering concepts with slick typography and fluid visual structures to create experiences that stand out.
+              As a Computer Science student at the National Institute of Technology (NIT), full-stack developer, and the founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">SOUL LAYER LAB</span>, I build production-ready digital products. I combine solid engineering concepts with slick typography and fluid visual structures to create experiences that stand out.
             </p>
             <p>
               Whether structuring localized AI browsers, architecting decentralized secure networks for vehicles, or building role-based education paths, I prioritize rapid delivery, robust architecture, and high aesthetic standards.

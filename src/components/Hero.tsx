@@ -241,7 +241,7 @@ export default function Hero({ active }: { active: boolean }) {
 
         <div ref={textRef} className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12 w-full">
           <p className="max-w-lg text-sm md:text-[15px] font-light text-muted dark:text-muted-dark leading-relaxed select-text font-body">
-            Full-stack engineer & founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">MedX Laboratory</span>, crafting scalable, local-first software from concept to production. NIT CSE Class of &apos;2027.
+            Full-stack engineer & founder of <span className="text-[#1A1A18] dark:text-[#F2F1ED] font-medium">SOUL LAYER LABS </span>, crafting scalable, local-first software from concept to production. NIT CSE Class of &apos;2027.
           </p>
 
           <div className="flex items-center">
@@ -264,7 +264,7 @@ export default function Hero({ active }: { active: boolean }) {
       <footer className="relative z-10 w-full flex justify-between items-center text-[9px] tracking-widest text-muted/40 dark:text-muted-dark/40 uppercase select-none border-t border-black/5 dark:border-white/5 pt-4">
         <span>© {new Date().getFullYear()} UMAR AHMED</span>
         <span className="hidden sm:inline">SCROLL TO DISCOVER</span>
-        <span>NIT RAIPUR CSE</span>
+        <span>NIT RAICHUR CSE</span>
       </footer>
     </div>
   );
