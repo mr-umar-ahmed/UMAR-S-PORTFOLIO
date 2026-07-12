@@ -1,8 +1,12 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { ArrowRight, Github, Linkedin, Mail, Send, CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
+import React, { useRef, useState, useEffect } from "react";
+import { ArrowRight, Github, Linkedin, Mail, CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const freelanceCards = [
   {
@@ -79,6 +83,87 @@ const certs = [
   "OPENAI BUILDATHON QUALIFIER"
 ];
 
+// Unified velocity-responsive certifications ticker component
+function CertificationsTicker() {
+  const tickerRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const doubledCerts = [...certs, ...certs, ...certs];
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+    }
+  }, []);
+
+  useEffect(() => {
+    const ticker = tickerRef.current;
+    if (!ticker) return;
+
+    const tween = gsap.fromTo(
+      ticker,
+      { xPercent: 0 },
+      {
+        xPercent: -33.33,
+        duration: 28,
+        repeat: -1,
+        ease: "none",
+      }
+    );
+
+    let trigger: ScrollTrigger | null = null;
+    let decayInterval: NodeJS.Timeout | null = null;
+
+    if (!isTouchDevice) {
+      trigger = ScrollTrigger.create({
+        trigger: document.documentElement,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          const velocity = self.getVelocity();
+          const speedMultiplier = 1 + Math.min(Math.abs(velocity) * 0.002, 4);
+          gsap.to(tween, {
+            timeScale: speedMultiplier,
+            duration: 0.35,
+            overwrite: "auto",
+          });
+        },
+      });
+
+      decayInterval = setInterval(() => {
+        if (!ScrollTrigger.isScrolling()) {
+          gsap.to(tween, {
+            timeScale: 1,
+            duration: 0.6,
+            overwrite: "auto",
+          });
+        }
+      }, 150);
+    }
+
+    return () => {
+      tween.kill();
+      if (trigger) trigger.kill();
+      if (decayInterval) clearInterval(decayInterval);
+    };
+  }, [isTouchDevice]);
+
+  return (
+    <div className="w-full border-y border-black/5 dark:border-white/5 py-6 overflow-hidden select-none relative">
+      <div 
+        ref={tickerRef} 
+        className="flex whitespace-nowrap gap-12 text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted/40 dark:text-muted-dark/40 w-max"
+      >
+        {doubledCerts.map((cert, index) => (
+          <span key={index} className="flex items-center gap-2">
+            <span>✦</span>
+            <span>{cert}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -106,7 +191,7 @@ export default function Contact() {
     if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE" || accessKey === "") {
       // Fallback redirect if key is not configured
       setTimeout(() => {
-         window.location.href = `mailto:umarahmedahmed24@gmail.com?subject=Portfolio Inquiry from ${name}&body=Sender: ${email}%0D%0A%0D%0A${message}`;
+        window.location.href = `mailto:umarahmedahmed24@gmail.com?subject=Portfolio Inquiry from ${name}&body=Sender: ${email}%0D%0A%0D%0A${message}`;
         setSubmitStatus("success");
         setIsSubmitting(false);
       }, 500);
@@ -153,7 +238,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={containerRef}
-      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-background dark:bg-background-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500"
+      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-background dark:bg-background-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500 animate-fade-in"
     >
       <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
         06/
@@ -161,7 +246,7 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto w-full flex flex-col gap-24 relative z-10 select-text">
         
-        {/* 3.8 Shipped Freelance Grid */}
+        {/* Shipped Freelance Grid */}
         <div className="w-full flex flex-col">
           <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-6">
             REAL-WORLD SOLVERS
@@ -181,11 +266,13 @@ export default function Contact() {
                   href={card.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cursor="view"
+                  data-cursor-text="VISIT"
                   onMouseEnter={() => setHoveredCard(card.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between min-h-[350px] group/item ${
+                  className={`border border-black/5 dark:border-white/5 bg-surface/40 dark:bg-surface-dark/20 p-6 rounded-[2px] transition-all duration-300 flex flex-col justify-between min-h-[350px] group/item cursor-none ${
                     isDimmed ? "opacity-30 scale-[0.98]" : "opacity-100 scale-100"
-                  } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark" : ""}`}
+                  } ${isActive ? "border-accent/30 dark:border-accent-dark/30 bg-surface dark:bg-surface-dark shadow-md" : ""}`}
                 >
                   <div className="flex justify-between items-start">
                     <span className="text-[10px] font-mono tracking-widest text-muted dark:text-muted-dark uppercase">
@@ -234,19 +321,10 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* 3.8 Certifications minimalist ticker */}
-        <div className="w-full border-y border-black/5 dark:border-white/5 py-6 overflow-hidden select-none relative">
-          <div className="flex whitespace-nowrap animate-infinite-scroll-left gap-12 text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted/40 dark:text-muted-dark/40">
-            {[...certs, ...certs, ...certs].map((cert, index) => (
-              <span key={index} className="flex items-center gap-2">
-                <span>✦</span>
-                <span>{cert}</span>
-              </span>
-            ))}
-          </div>
-        </div>
+        {/* Certifications minimalist ticker */}
+        <CertificationsTicker />
 
-        {/* 3.9 Contact details & Form */}
+        {/* Contact details & Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
           {/* Left Headline & Social Info */}
@@ -320,8 +398,11 @@ export default function Contact() {
                     name="name"
                     placeholder=" "
                     required
-                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors font-body"
+                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none transition-colors font-body"
                   />
+                  {/* Drawing highlight underline */}
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
+                  
                   <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     YOUR NAME
                   </label>
@@ -333,8 +414,11 @@ export default function Contact() {
                     name="email"
                     placeholder=" "
                     required
-                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors font-body"
+                    className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none transition-colors font-body"
                   />
+                  {/* Drawing highlight underline */}
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
+                  
                   <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                     EMAIL ADDRESS
                   </label>
@@ -348,8 +432,11 @@ export default function Contact() {
                   rows={4}
                   placeholder=" "
                   required
-                  className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors resize-none font-body"
+                  className="peer w-full bg-transparent border-b border-black/10 dark:border-white/10 py-3.5 text-sm text-[#1A1A18] dark:text-[#F2F1ED] focus:outline-none transition-colors resize-none font-body"
                 />
+                {/* Drawing highlight underline */}
+                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent dark:bg-accent-dark transform scale-x-0 peer-focus:scale-x-100 transition-transform origin-center duration-300 pointer-events-none" />
+                
                 <label className="absolute left-0 top-3.5 text-muted/60 dark:text-muted-dark/60 text-xs tracking-widest font-display font-medium pointer-events-none transition-all duration-300 transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-accent dark:peer-focus:text-accent-dark">
                   YOUR DISPATCH MESSAGE
                 </label>
