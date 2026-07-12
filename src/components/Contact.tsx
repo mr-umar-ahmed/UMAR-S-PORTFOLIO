@@ -15,7 +15,7 @@ const freelanceCards = [
     role: "Clinical Analytics",
     desc: "Volumetric diagnostic platform mapping real-time waiting logs and patient triage routing.",
     link: "https://medx-laboratory.netlify.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-medical-research-facility-and-microscope-40176-large.mp4"
+    videoUrl: "/videos/medx-demo.mp4"
   },
   {
     id: "skilledge",
@@ -23,7 +23,7 @@ const freelanceCards = [
     role: "EdTech Dashboard",
     desc: "Personalized educational milestone mapper with learning tracks and dashboard metrics.",
     link: "https://skill-edge-os.vercel.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-programming-code-scrolls-on-a-dark-screen-34351-large.mp4"
+    videoUrl: "/videos/skilledge-demo.mp4"
   },
   {
     id: "whitelabel",
@@ -31,7 +31,7 @@ const freelanceCards = [
     role: "Premium E-commerce",
     desc: "Editorial storefront with smooth micro-interactions, spring mechanics, and animations.",
     link: "https://whitelabelwatches.netlify.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-wrist-watch-mechanism-rotating-close-up-42023-large.mp4"
+    videoUrl: "/videos/whitelabel-demo.mp4"
   },
   {
     id: "nit",
@@ -39,7 +39,7 @@ const freelanceCards = [
     role: "System Administration",
     desc: "Secure role-based dashboard handling query pipelines and student grievance logs.",
     link: "https://github.com/mr-umar-ahmed",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-finger-pointing-at-a-screen-showing-charts-34352-large.mp4"
+    videoUrl: "/videos/nit-demo.mp4"
   },
   {
     id: "crafiraa-portfolio",
@@ -47,7 +47,7 @@ const freelanceCards = [
     role: "Creative Agency",
     desc: "Highly interactive agency showcase built with immersive 3D Spline backgrounds and elegant scroll animations.",
     link: "https://crafiraa-protfolio.netlify.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-binary-code-31863-large.mp4"
+    videoUrl: "/videos/crafiraa-portfolio-demo.mp4"
   },
   {
     id: "crafiraa-studio",
@@ -55,7 +55,7 @@ const freelanceCards = [
     role: "Digital Experience",
     desc: "Modern landing experience built on Next.js featuring smooth transitions, 3D interactive graphics, and micro-interactions.",
     link: "https://crafiraa-o0.web.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-data-center-network-connections-34356-large.mp4"
+    videoUrl: "/videos/crafiraa-studio-demo.mp4"
   },
   {
     id: "localfix",
@@ -63,7 +63,7 @@ const freelanceCards = [
     role: "Service Marketplace",
     desc: "Hyperlocal B2C service platform connecting rural households in India with verified professionals and contractors.",
     link: "https://local-fixz.netlify.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-finger-pointing-at-a-screen-showing-charts-34352-large.mp4"
+    videoUrl: "/videos/localfix-demo.mp4"
   },
   {
     id: "unveil-spark",
@@ -71,7 +71,7 @@ const freelanceCards = [
     role: "Tech Agency",
     desc: "Premium tech agency website displaying elegant typography, layout-driven animations, and theme-matching visual effects.",
     link: "http://unveil-spark-tech.web.app/",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-server-room-under-digital-circuit-lines-and-numbers-31846-large.mp4"
+    videoUrl: "/videos/unveilspark-demo.mp4"
   }
 ];
 

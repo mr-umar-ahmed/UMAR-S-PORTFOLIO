@@ -18,7 +18,7 @@ const projects = [
     url: "veris-blue.vercel.app",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-binary-code-31863-large.mp4"
+    videoUrl: "/videos/veris-demo.mp4"
   },
   {
     id: "sparx",
@@ -30,7 +30,7 @@ const projects = [
     url: "sparx://browser.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-data-center-network-connections-34356-large.mp4"
+    videoUrl: "/videos/sparx-demo.mp4"
   },
   {
     id: "prompt",
@@ -42,7 +42,7 @@ const projects = [
     url: "promptvault.io",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-server-room-under-digital-circuit-lines-and-numbers-31846-large.mp4"
+    videoUrl: "/videos/prompt-demo.mp4"
   },
   {
     id: "vanets",
@@ -54,7 +54,7 @@ const projects = [
     url: "vanet-network.eth",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Shield,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-circuit-board-details-with-glowing-nodes-and-lines-31872-large.mp4"
+    videoUrl: "/videos/vanets-demo.mp4"
   },
   {
     id: "rahi",
@@ -66,7 +66,7 @@ const projects = [
     url: "rahi-guide.org",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-glowing-lines-of-light-on-a-black-background-34289-large.mp4"
+    videoUrl: "/videos/rahi-demo.mp4"
   },
   {
     id: "hospital",
@@ -78,7 +78,7 @@ const projects = [
     url: "queue-health.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-network-connection-lines-and-glowing-dots-34293-large.mp4"
+    videoUrl: "/videos/hospital-demo.mp4"
   },
   {
     id: "deshstack",
@@ -90,7 +90,7 @@ const projects = [
     url: "desh-stack.vercel.app",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Star,
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-dns-data-analysis-concept-31835-large.mp4"
+    videoUrl: "/videos/deshstack-demo.mp4"
   },
 ];
 
