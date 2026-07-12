@@ -10,15 +10,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [count, setCount] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
+    // Detect active theme state on mount
     if (typeof window !== "undefined") {
-      const hasLoadedBefore = sessionStorage.getItem("portfolio-loaded");
-      if (hasLoadedBefore === "true") {
-        setIsLoaded(true);
-        onComplete();
-        return;
-      }
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
     }
 
     document.body.style.overflow = "hidden";
@@ -71,14 +69,12 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 );
               },
               onComplete: () => {
-                sessionStorage.setItem("portfolio-loaded", "true");
                 document.body.style.overflow = "";
                 setIsLoaded(true);
                 onComplete();
               }
             });
           } else {
-            sessionStorage.setItem("portfolio-loaded", "true");
             document.body.style.overflow = "";
             setIsLoaded(true);
             onComplete();
@@ -95,23 +91,27 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
   if (isLoaded) return null;
 
+  const radialGlow = theme === "dark" 
+    ? "radial-gradient(circle at 50% 50%, rgba(198, 255, 58, 0.15), transparent 70%)" // Acid green
+    : "radial-gradient(circle at 50% 50%, rgba(216, 71, 31, 0.1), transparent 70%)"; // Burnt orange
+
   return (
     <>
       <div
         id="preloader-container"
-        className="fixed inset-0 bg-[#0D0C0F] z-[99999] flex flex-col justify-between p-8 md:p-12 select-none overflow-hidden"
+        className="fixed inset-0 bg-background dark:bg-background-dark z-[99999] flex flex-col justify-between p-8 md:p-12 select-none overflow-hidden transition-colors duration-500"
       >
         {/* Background Interactive Mesh Glow & Grid Lines */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.25] grid-lines" />
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.15] dark:opacity-[0.25] grid-lines" />
         <div 
-          className="absolute inset-0 pointer-events-none z-0 opacity-20"
+          className="absolute inset-0 pointer-events-none z-0 opacity-20 transition-all duration-500"
           style={{
-            background: "radial-gradient(circle at 50% 50%, rgba(198, 255, 58, 0.15), transparent 70%)"
+            background: radialGlow
           }}
         />
 
         {/* Header Metadata */}
-        <div className="flex justify-between items-center text-[10px] tracking-[0.25em] text-[#8F8E89]/60 font-semibold font-display relative z-10">
+        <div className="flex justify-between items-center text-[10px] tracking-[0.25em] text-muted/60 dark:text-[#8F8E89]/60 font-semibold font-display relative z-10">
           <span>PORTFOLIO / UMAR AHMED</span>
           <span>NIT CSE / CLASS OF 2027</span>
         </div>
@@ -126,23 +126,23 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 animate={{ y: "0%" }}
                 exit={{ y: "-100%" }}
                 transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
-                className="block text-xl md:text-2xl font-display font-bold text-[#C6FF3A] tracking-[0.25em]"
+                className="block text-xl md:text-2xl font-display font-bold text-accent dark:text-accent-dark tracking-[0.25em]"
               >
                 {words[wordIndex]}
               </motion.span>
             </AnimatePresence>
           </div>
           
-          <span className="text-[16vw] md:text-[10vw] font-display font-black tracking-tighter leading-none select-none text-[#F2F1ED] tabular-nums">
+          <span className="text-[16vw] md:text-[10vw] font-display font-black tracking-tighter leading-none select-none text-[#1A1A18] dark:text-[#F2F1ED] tabular-nums">
             {count.toString().padStart(2, "0")}%
           </span>
         </div>
 
         {/* Progress Bar & Footer */}
         <div className="w-full relative z-10">
-          <div className="w-full h-[2px] bg-white/10 relative overflow-hidden">
+          <div className="w-full h-[2px] bg-black/5 dark:bg-white/10 relative overflow-hidden">
             <motion.div
-              className="absolute top-0 left-0 h-full bg-[#C6FF3A]"
+              className="absolute top-0 left-0 h-full bg-accent dark:bg-accent-dark"
               style={{ width: `${count}%` }}
             />
             {/* Subtle pulse light moving across progress */}
@@ -151,7 +151,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
               style={{ left: `${count - 15}%` }}
             />
           </div>
-          <div className="flex justify-between text-[9px] tracking-[0.2em] text-[#8F8E89]/40 mt-4 uppercase">
+          <div className="flex justify-between text-[9px] tracking-[0.2em] text-muted/50 dark:text-muted-dark/40 mt-4 uppercase">
             <span>LOADING SYSTEM ASSETS</span>
             <span>EST. TIME 2.2S</span>
           </div>
@@ -189,8 +189,8 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
               id="burn-matrix-edge"
             />
             
-            {/* 4. Color edge mask with your theme's acid green accent color (#C6FF3A) */}
-            <feFlood floodColor="#C6FF3A" floodOpacity="1" result="edgeColor" />
+            {/* 4. Color edge mask with the theme's accent variable */}
+            <feFlood floodColor="var(--color-accent)" floodOpacity="1" result="edgeColor" />
             <feComposite operator="in" in="edgeColor" in2="edgeMask" result="coloredEdge" />
             
             {/* 5. Composite main container Graphic with main erosion mask */}
