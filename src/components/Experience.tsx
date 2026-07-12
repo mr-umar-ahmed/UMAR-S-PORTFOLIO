@@ -35,7 +35,7 @@ export default function Experience() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Mobile layout animations
+      // Mobile layout animations (< 1024px)
       mm.add("(max-width: 1023px)", () => {
         gsap.fromTo(
           lineRef.current,
@@ -94,62 +94,103 @@ export default function Experience() {
         }
       });
 
-      // Desktop layout animations (horizontal timeline)
+      // Desktop layout animations (>= 1024px)
       mm.add("(min-width: 1024px)", () => {
         const track = containerRef.current?.querySelector(".horizontal-track") as HTMLElement;
         const hLine = containerRef.current?.querySelector(".horizontal-line") as HTMLElement;
-        if (!track) return;
+        const cards = containerRef.current?.querySelectorAll(".horizontal-card");
+        if (!track || !hLine || !cards) return;
 
         const amountToScroll = track.scrollWidth - window.innerWidth + 128;
 
-        const scrollTween = gsap.to(track, {
-          x: -amountToScroll,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            end: () => `+=${amountToScroll}`,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        gsap.fromTo(
-          hLine,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
+        if (amountToScroll > 0) {
+          // 1. PIN & HORIZONTAL SCROLL (If content overflows screen width)
+          const scrollTween = gsap.to(track, {
+            x: -amountToScroll,
             ease: "none",
-            transformOrigin: "left center",
             scrollTrigger: {
               trigger: containerRef.current,
+              pin: true,
               scrub: 1,
               start: "top top",
               end: () => `+=${amountToScroll}`,
               invalidateOnRefresh: true,
             },
-          }
-        );
+          });
 
-        const cards = track.querySelectorAll(".horizontal-card");
-        cards.forEach((card) => {
+          // Draw horizontal line scrubbed over scroll
           gsap.fromTo(
-            card,
-            { opacity: 0, scale: 0.9 },
+            hLine,
+            { scaleX: 0 },
             {
-              opacity: 1,
-              scale: 1,
-              duration: 0.6,
+              scaleX: 1,
+              ease: "none",
+              transformOrigin: "left center",
               scrollTrigger: {
-                trigger: card,
-                containerAnimation: scrollTween,
-                start: "left 85%",
-                toggleActions: "play none none reverse",
+                trigger: containerRef.current,
+                scrub: 1,
+                start: "top top",
+                end: () => `+=${amountToScroll}`,
+                invalidateOnRefresh: true,
               },
             }
           );
-        });
+
+          // Stagger card reveals
+          cards.forEach((card) => {
+            gsap.fromTo(
+              card,
+              { opacity: 0, scale: 0.9 },
+              {
+                opacity: 1,
+                scale: 1,
+                duration: 0.6,
+                scrollTrigger: {
+                  trigger: card,
+                  containerAnimation: scrollTween,
+                  start: "left 85%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          });
+        } else {
+          // 2. CENTERED ROW FALLBACK (If content fits on screen e.g. wider desktop monitors)
+          // Draw horizontal line once section enters viewport
+          gsap.fromTo(
+            hLine,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              duration: 1.5,
+              ease: "power4.out",
+              transformOrigin: "left center",
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 70%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+
+          // Fade-in cards with staggered delays
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              stagger: 0.2,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 70%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
       });
     }, containerRef);
 
@@ -160,15 +201,17 @@ export default function Experience() {
     <section
       id="experience"
       ref={containerRef}
-      className="relative min-h-screen py-24 md:py-36 px-8 md:px-16 bg-surface dark:bg-surface-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500 overflow-hidden"
+      className="relative min-h-screen lg:h-screen py-20 lg:py-12 px-8 md:px-16 bg-surface dark:bg-surface-dark border-t border-black/5 dark:border-white/5 transition-colors duration-500 overflow-hidden flex flex-col lg:justify-center"
     >
-      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none">
+      {/* Visual Indicator Number */}
+      <div className="absolute top-12 left-8 md:left-16 text-[10vw] font-display font-black text-muted/10 dark:text-muted-dark/10 select-none pointer-events-none z-0">
         03/
       </div>
 
-      <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
-        <div className="w-full text-left mb-16 md:mb-24">
-          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-4">
+      <div className="max-w-7xl mx-auto w-full flex flex-col items-center z-10">
+        {/* Header Block */}
+        <div className="w-full text-left mb-12 lg:mb-8">
+          <span className="text-xs tracking-[0.25em] text-accent dark:text-accent-dark font-display font-semibold uppercase block mb-3">
             JOURNEY
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter text-[#1A1A18] dark:text-[#F2F1ED] select-text">
@@ -178,8 +221,10 @@ export default function Experience() {
 
         {/* Mobile View: Vertical Timeline */}
         <div className="relative w-full max-w-4xl min-h-[500px] lg:hidden select-text">
+          {/* Vertical path backdrop */}
           <div className="absolute left-4 top-0 bottom-0 w-[2px] bg-black/10 dark:bg-white/10 -translate-x-1/2 z-0" />
           
+          {/* Active drawing vertical path */}
           <div
             ref={lineRef}
             className="absolute left-4 top-0 bottom-0 w-[2px] bg-accent dark:bg-accent-dark -translate-x-1/2 z-0 origin-top"
@@ -192,6 +237,7 @@ export default function Experience() {
                 key={idx}
                 className="timeline-item relative flex flex-col items-start w-full z-10 pl-10"
               >
+                {/* Connector Dot */}
                 <div className="absolute left-4 top-1.5 -translate-x-1/2 w-6 h-6 flex items-center justify-center">
                   <div
                     className="timeline-dot w-3.5 h-3.5 rounded-full bg-accent dark:bg-accent-dark relative z-10 border border-background dark:border-background-dark"
@@ -200,6 +246,7 @@ export default function Experience() {
                   <div className="absolute w-full h-full rounded-full bg-accent/20 dark:bg-accent-dark/20 animate-ping z-0" />
                 </div>
 
+                {/* Timeline content Card */}
                 <div className="timeline-card w-full bg-background/50 dark:bg-background-dark/30 glassmorphism p-6 rounded-[2px] hover:border-accent/20 dark:hover:border-accent-dark/20 transition-all duration-300 text-left">
                   <span className="text-[10px] md:text-xs font-semibold tracking-widest text-accent dark:text-accent-dark font-display uppercase block mb-2">
                     {item.duration}
@@ -210,7 +257,7 @@ export default function Experience() {
                   <h4 className="text-sm md:text-base text-muted dark:text-muted-dark font-body font-medium mb-4">
                     {item.company}
                   </h4>
-                  <p className="text-xs md:text-sm text-muted dark:text-muted-dark font-body leading-relaxed">
+                  <p className="text-xs md:text-sm text-[#555] dark:text-white/60 font-body leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -219,9 +266,9 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Desktop View: Horizontal scroll timeline */}
-        <div className="hidden lg:block w-full relative">
-          <div className="horizontal-track flex items-center gap-16 py-32 px-12 w-max relative">
+        {/* Desktop View: Horizontal timeline */}
+        <div className="hidden lg:block w-full overflow-hidden relative">
+          <div className="horizontal-track flex items-center justify-center gap-16 py-20 px-8 w-full lg:w-max relative mx-auto">
             {/* Horizontal Line backdrop */}
             <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-black/10 dark:bg-white/10 z-0" />
             
@@ -234,7 +281,7 @@ export default function Experience() {
               return (
                 <div
                   key={idx}
-                  className="horizontal-card relative flex flex-col items-center w-[380px] flex-shrink-0 z-10"
+                  className="horizontal-card relative flex flex-col items-center w-[360px] flex-shrink-0 z-10"
                 >
                   {/* Central timeline connector dot */}
                   <div className="absolute top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center">
@@ -245,10 +292,10 @@ export default function Experience() {
                     <div className="absolute w-full h-full rounded-full bg-accent/20 dark:bg-accent-dark/20 animate-ping z-0" />
                   </div>
 
-                  {/* Offset cards alternately top/bottom */}
+                  {/* Offset cards alternately top/bottom by a smaller compact distance */}
                   <div
-                    className={`timeline-card bg-background/50 dark:bg-background-dark/30 glassmorphism p-6 md:p-8 rounded-[2px] hover:border-accent/20 dark:hover:border-accent-dark/20 transition-all duration-300 text-left w-full ${
-                      isEven ? "mb-44" : "mt-44"
+                    className={`timeline-card bg-background/50 dark:bg-background-dark/30 glassmorphism p-6 rounded-[2px] hover:border-accent/20 dark:hover:border-accent-dark/20 transition-all duration-300 text-left w-full ${
+                      isEven ? "mb-36" : "mt-36"
                     }`}
                   >
                     <span className="text-[10px] md:text-xs font-semibold tracking-widest text-accent dark:text-accent-dark font-display uppercase block mb-2">

@@ -183,11 +183,16 @@ export default function Projects() {
             return (
               <div
                 key={proj.id}
-                className="project-panel w-full lg:w-[85vw] flex-shrink-0 h-[100dvh] lg:h-screen bg-background dark:bg-background-dark border-r border-black/5 dark:border-white/5 flex flex-col lg:flex-row items-center justify-center p-8 md:p-16 gap-8 lg:gap-16 select-text whitespace-normal transition-colors duration-500 sticky top-0 lg:relative"
-                style={{ backgroundColor: proj.color, zIndex: idx + 2 }}
+                className="project-panel w-full lg:w-[85vw] flex-shrink-0 h-[100dvh] lg:h-screen bg-[#F7F5F1] dark:bg-[#0D0C0F] border-b lg:border-b-0 lg:border-r border-black/5 dark:border-white/5 flex flex-col lg:flex-row items-center justify-center p-8 md:p-16 gap-8 lg:gap-16 select-text whitespace-normal transition-colors duration-500 sticky top-0 lg:relative overflow-hidden"
+                style={{ zIndex: idx + 2 }}
               >
+                {/* Opaque Brand Tint Overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20 z-0"
+                  style={{ backgroundColor: proj.color }}
+                />
                 {/* Info block */}
-                <div className="w-full lg:w-[40%] flex flex-col justify-center order-2 lg:order-1">
+                <div className="w-full lg:w-[40%] flex flex-col justify-center order-2 lg:order-1 relative z-10">
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-xs tracking-wider text-accent dark:text-accent-dark font-display font-bold font-mono">
                       {proj.subtitle}
@@ -232,7 +237,7 @@ export default function Projects() {
                 </div>
 
                 {/* Browser Mockup */}
-                <div className="w-full lg:w-[60%] flex items-center justify-center order-1 lg:order-2">
+                <div className="w-full lg:w-[60%] flex items-center justify-center order-1 lg:order-2 relative z-10">
                   <div className="mockup-inner relative w-full aspect-video bg-surface/50 dark:bg-surface-dark/40 glassmorphism rounded-md border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl flex flex-col group/mockup">
                     {/* Header */}
                     <div className="h-7 bg-background/80 dark:bg-[#151619]/80 border-b border-black/5 dark:border-white/5 px-4 flex items-center gap-2 select-none">
