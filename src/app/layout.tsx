@@ -65,6 +65,26 @@ export default function RootLayout({
             `
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Umar Ahmed",
+              "url": "https://umarahmed.dev",
+              "jobTitle": "Full-Stack Software Engineer",
+              "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "National Institute of Technology Raipur"
+              },
+              "sameAs": [
+                "https://github.com/mr-umar-ahmed",
+                "https://linkedin.com/in/mr-umar-ahmed"
+              ]
+            })
+          }}
+        />
       </head>
       <body className="antialiased select-none overflow-x-hidden volumetric-bg">
         <div className="noise-overlay" />

@@ -9,13 +9,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
+    id: "medx-system",
+    title: "MedX System Suite",
+    subtitle: "Enterprise Clinical Suite",
+    desc: "Production-ready enterprise medical software featuring a multi-role Admin Panel, client booking portal, and primary health records software managing volumetric lab analytics.",
+    tech: ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS", "Socket.io"],
+    index: "01",
+    url: "medx-system.live",
+    color: "rgba(255, 92, 51, 0.05)",
+    icon: Shield,
+    videoUrl: "/videos/medx-system-demo.mp4"
+  },
+  {
     id: "veris",
     title: "VERIS Secure Media",
     subtitle: "Detect Use",
     desc: "The ultimate cryptographic command center. Authenticate digital assets, embed invisible ownership signatures, and flag misappropriation across the web.",
     tech: ["Web3", "Cryptography", "Next.js", "TypeScript", "Tailwind CSS"],
-    index: "01",
-    url: "https://veris-blue.vercel.app/",
+    index: "02",
+    url: "veris-blue.vercel.app",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
     videoUrl: "/videos/veris-demo.mp4"
@@ -26,8 +38,8 @@ const projects = [
     subtitle: "Privacy-First AI Browser",
     desc: "Local privacy-first AI browser incorporating LLMs directly in the runtime for instant query processing, context management, and offline assistance.",
     tech: ["Electron", "React", "Llama 3", "Node.js", "Tailwind CSS"],
-    index: "02",
-    url: "https://sparx-browser.vercel.app/",
+    index: "03",
+    url: "sparx://browser.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
     videoUrl: "/videos/sparx-demo.mp4"
@@ -38,8 +50,8 @@ const projects = [
     subtitle: "Prompt Tagging & Workflows",
     desc: "Scalable MERN stack storage & tagging library designed for LLM workflow engineers to test, categorize, version control, and export prompts.",
     tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
-    index: "03",
-    url: "https://prompt-vault-app.netlify.app/",
+    index: "04",
+    url: "promptvault.io",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
     videoUrl: "/videos/prompt-demo.mp4"
@@ -50,7 +62,7 @@ const projects = [
     subtitle: "Decentralized Vehicular Security",
     desc: "Decentralized security infrastructure for vehicular networks utilizing smart contracts to validate routing data and authenticate nodes.",
     tech: ["Solidity", "Ethers.js", "Web3", "Next.js", "Tailwind CSS"],
-    index: "04",
+    index: "05",
     url: "vanet-network.eth",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Shield,
@@ -62,8 +74,8 @@ const projects = [
     subtitle: "Career Mapping System",
     desc: "Role-based career guidance platform mapping personalized educational steps, courses, and resources for rural students with custom learning tracks.",
     tech: ["React.js", "Firebase", "CSS Modules", "Chart.js"],
-    index: "05",
-    url: "https://rahi-career-guide.web.app/",
+    index: "06",
+    url: "rahi-guide.org",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
     videoUrl: "/videos/rahi-demo.mp4"
@@ -74,8 +86,8 @@ const projects = [
     subtitle: "Healthcare Routing System",
     desc: "Multi-role queue routing system managing token allocation, patient triage routing, and real-time waiting logs in regional health centers.",
     tech: ["Node.js", "Express", "React", "MongoDB", "Socket.io"],
-    index: "06",
-    url: "https://hospital-queue-management-nqfg.onrender.com/",
+    index: "07",
+    url: "queue-health.local",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
     videoUrl: "/videos/hospital-demo.mp4"
@@ -86,8 +98,8 @@ const projects = [
     subtitle: "Indian Software Reviews",
     desc: "Production-grade, Gartner-style B2B software review and discovery platform designed specifically for Indian-built software, displaying DPDP compliance, GST-ready invoicing status, and Razorpay integrations.",
     tech: ["Next.js", "React", "Clerk Auth", "Tailwind CSS", "TypeScript"],
-    index: "07",
-    url: "https://desh-stack.vercel.app/",
+    index: "08",
+    url: "desh-stack.vercel.app",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Star,
     videoUrl: "/videos/deshstack-demo.mp4"
