@@ -18,7 +18,7 @@ const projects = [
     url: "medx-system.live",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
-    videoUrl: "/videos/medx-system-demo.mp4"
+    videoUrl: "/videos/medx-demo.mp4"
   },
   {
     id: "veris",
@@ -161,7 +161,9 @@ function TiltMockup({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Lazy-loaded video component using IntersectionObserver to prevent lag
+// Robust video component — uses autoPlay instead of IntersectionObserver
+// because GSAP horizontal scroll uses CSS transforms (translateX) which
+// break IntersectionObserver viewport detection in production.
 function ProjectVideo({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -169,31 +171,26 @@ function ProjectVideo({ src }: { src: string }) {
     const video = videoRef.current;
     if (!video) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch((err) => {
-            console.log("Observer play blocked:", err);
-          });
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.15 }
-    );
+    // Force load and attempt play after mount
+    video.load();
+    const timer = setTimeout(() => {
+      video.play().catch(() => {
+        // Autoplay blocked by browser policy — silently ignore
+      });
+    }, 300);
 
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
+    return () => clearTimeout(timer);
+  }, [src]);
 
   return (
     <video
       ref={videoRef}
       src={src}
+      autoPlay
       loop
       muted
       playsInline
-      preload="metadata"
+      preload="auto"
       className="absolute inset-0 w-full h-full object-cover opacity-80"
     />
   );
