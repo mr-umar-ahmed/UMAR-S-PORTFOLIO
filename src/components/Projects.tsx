@@ -41,8 +41,8 @@ const projects = [
     desc: "Local privacy-first AI browser incorporating LLMs directly in the runtime for instant query processing, context management, and offline assistance.",
     tech: ["Electron", "React", "Llama 3", "Node.js", "Tailwind CSS"],
     index: "03",
-    url: "sparx://browser.local",
-    link: "https://github.com/mr-umar-ahmed",
+    url: "sparx-browser.vercel.app",
+    link: "https://sparx-browser.vercel.app/",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
     videoUrl: "/videos/sparx-demo.mp4"
@@ -55,7 +55,7 @@ const projects = [
     tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
     index: "04",
     url: "promptvault.io",
-    link: "https://github.com/mr-umar-ahmed",
+    link: "https://prompt-vault-app.netlify.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
     videoUrl: "/videos/prompt-demo.mp4"
@@ -80,8 +80,8 @@ const projects = [
     desc: "Role-based career guidance platform mapping personalized educational steps, courses, and resources for rural students with custom learning tracks.",
     tech: ["React.js", "Firebase", "CSS Modules", "Chart.js"],
     index: "06",
-    url: "rahi-guide.org",
-    link: "https://github.com/mr-umar-ahmed",
+    url: "rahi-career-guide.web.app",
+    link: "https://rahi-career-guide.web.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
     videoUrl: "/videos/rahi-demo.mp4"
@@ -93,8 +93,8 @@ const projects = [
     desc: "Multi-role queue routing system managing token allocation, patient triage routing, and real-time waiting logs in regional health centers.",
     tech: ["Node.js", "Express", "React", "MongoDB", "Socket.io"],
     index: "07",
-    url: "queue-health.local",
-    link: "https://github.com/mr-umar-ahmed",
+    url: "hospital-queue.onrender.com",
+    link: "https://hospital-queue-management-nqfg.onrender.com/",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
     videoUrl: "/videos/hospital-demo.mp4"
@@ -359,27 +359,32 @@ export default function Projects() {
                   {/* CTA link */}
                   <div className="reveal-item flex">
                     <a
-                      href={proj.link}
+                      href="https://github.com/mr-umar-ahmed"
                       target="_blank"
                       rel="noopener noreferrer"
                       data-cursor="view"
-                      data-cursor-text="VISIT"
+                      data-cursor-text="CODE"
                       className="group/btn flex items-center gap-2 border-b border-accent dark:border-accent-dark pb-2 text-accent dark:text-accent-dark text-xs font-semibold font-display tracking-widest uppercase transition-all hover:text-[#1A1A18] dark:hover:text-[#F2F1ED] hover:border-[#1A1A18] dark:hover:border-[#F2F1ED]"
                     >
-                      VIEW LIVE PROJECT
+                      EXPLORE REPOSITORIES
                       <ArrowUpRight className="w-4 h-4 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </a>
                   </div>
                 </div>
 
-                {/* Browser Mockup Container */}
-                <div className="w-full lg:w-[60%] flex items-center justify-center order-1 lg:order-2 relative z-10">
+                {/* Browser Mockup Container — Clickable to open live project */}
+                <a
+                  href={proj.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full lg:w-[60%] flex items-center justify-center order-1 lg:order-2 relative z-10 block"
+                >
                   <div className="mockup-parallax-wrapper w-full aspect-video relative">
                     <TiltMockup>
                       <div
                         data-cursor="view"
-                        data-cursor-text="DEMO"
-                        className="mockup-inner relative w-full h-full bg-surface/50 dark:bg-surface-dark/40 glassmorphism rounded-md border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl flex flex-col group/mockup cursor-none"
+                        data-cursor-text="VISIT"
+                        className="mockup-inner relative w-full h-full bg-surface/50 dark:bg-surface-dark/40 glassmorphism rounded-md border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl flex flex-col group/mockup cursor-pointer"
                       >
                         {/* Header */}
                         <div className="h-7 bg-background/80 dark:bg-[#151619]/80 border-b border-black/5 dark:border-white/5 px-4 flex items-center gap-2 select-none">
@@ -416,7 +421,7 @@ export default function Projects() {
                       </div>
                     </TiltMockup>
                   </div>
-                </div>
+                </a>
               </div>
             );
           })}
