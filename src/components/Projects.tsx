@@ -16,6 +16,7 @@ const projects = [
     tech: ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS", "Socket.io"],
     index: "01",
     url: "medx-system.live",
+    link: "https://medx-laboratory.netlify.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
     videoUrl: "/videos/medx-demo.mp4"
@@ -28,6 +29,7 @@ const projects = [
     tech: ["Web3", "Cryptography", "Next.js", "TypeScript", "Tailwind CSS"],
     index: "02",
     url: "veris-blue.vercel.app",
+    link: "https://veris-blue.vercel.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Shield,
     videoUrl: "/videos/veris-demo.mp4"
@@ -40,6 +42,7 @@ const projects = [
     tech: ["Electron", "React", "Llama 3", "Node.js", "Tailwind CSS"],
     index: "03",
     url: "sparx://browser.local",
+    link: "https://github.com/mr-umar-ahmed",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Cpu,
     videoUrl: "/videos/sparx-demo.mp4"
@@ -52,6 +55,7 @@ const projects = [
     tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
     index: "04",
     url: "promptvault.io",
+    link: "https://github.com/mr-umar-ahmed",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Layers,
     videoUrl: "/videos/prompt-demo.mp4"
@@ -64,6 +68,7 @@ const projects = [
     tech: ["Solidity", "Ethers.js", "Web3", "Next.js", "Tailwind CSS"],
     index: "05",
     url: "vanet-network.eth",
+    link: "https://github.com/mr-umar-ahmed",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Shield,
     videoUrl: "/videos/vanets-demo.mp4"
@@ -76,6 +81,7 @@ const projects = [
     tech: ["React.js", "Firebase", "CSS Modules", "Chart.js"],
     index: "06",
     url: "rahi-guide.org",
+    link: "https://github.com/mr-umar-ahmed",
     color: "rgba(255, 92, 51, 0.05)",
     icon: MapPin,
     videoUrl: "/videos/rahi-demo.mp4"
@@ -88,6 +94,7 @@ const projects = [
     tech: ["Node.js", "Express", "React", "MongoDB", "Socket.io"],
     index: "07",
     url: "queue-health.local",
+    link: "https://github.com/mr-umar-ahmed",
     color: "rgba(198, 255, 58, 0.05)",
     icon: Users,
     videoUrl: "/videos/hospital-demo.mp4"
@@ -100,6 +107,7 @@ const projects = [
     tech: ["Next.js", "React", "Clerk Auth", "Tailwind CSS", "TypeScript"],
     index: "08",
     url: "desh-stack.vercel.app",
+    link: "https://desh-stack.vercel.app/",
     color: "rgba(255, 92, 51, 0.05)",
     icon: Star,
     videoUrl: "/videos/deshstack-demo.mp4"
@@ -351,14 +359,14 @@ export default function Projects() {
                   {/* CTA link */}
                   <div className="reveal-item flex">
                     <a
-                      href="https://github.com/mr-umar-ahmed"
+                      href={proj.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       data-cursor="view"
-                      data-cursor-text="CODE"
+                      data-cursor-text="VISIT"
                       className="group/btn flex items-center gap-2 border-b border-accent dark:border-accent-dark pb-2 text-accent dark:text-accent-dark text-xs font-semibold font-display tracking-widest uppercase transition-all hover:text-[#1A1A18] dark:hover:text-[#F2F1ED] hover:border-[#1A1A18] dark:hover:border-[#F2F1ED]"
                     >
-                      EXPLORE REPOSITORIES
+                      VIEW LIVE PROJECT
                       <ArrowUpRight className="w-4 h-4 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </a>
                   </div>
